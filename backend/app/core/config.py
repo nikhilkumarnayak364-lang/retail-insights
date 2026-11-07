@@ -41,9 +41,15 @@ class Settings(BaseSettings):
     @property
     def cors_origins(self) -> List[str]:
         """Aggregate all allowed CORS origins dynamically."""
+        if self.FRONTEND_ORIGIN and self.FRONTEND_ORIGIN.strip() == "*":
+            return ["*"]
         origins = set(self.ADDITIONAL_ALLOWED_ORIGINS)
         if self.FRONTEND_ORIGIN:
-            origins.add(self.FRONTEND_ORIGIN.strip())
+            # Handle comma-separated list of origins or single origin
+            for org in self.FRONTEND_ORIGIN.split(","):
+                org_clean = org.strip().rstrip("/")
+                if org_clean:
+                    origins.add(org_clean)
         return list(origins)
 
 
