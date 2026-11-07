@@ -1,0 +1,13 @@
+"""Pytest fixtures and configuration."""
+
+import pytest
+from starlette.testclient import TestClient
+from app.main import app
+
+
+@pytest.fixture(scope="module")
+def client() -> TestClient:
+    """Provides a synchronous test client instance for FastAPI."""
+    with TestClient(app) as test_client:
+        yield test_client
+

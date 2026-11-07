@@ -1,0 +1,161 @@
+Transaction ID,Date,Customer ID,Gender,Age,Store ID,Store Name,City,Region,Product SKU,Product Name,Department,Quantity,Unit Price,Unit Cost,Discount,Total Amount,Profit,Payment Method
+TRX-CLO-1001,2026-09-09 09:20:35,CUST-135,Female,56,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-64,Slim Fit Jeans,Men's Apparel,2,59.99,22.0,12.0,107.98,63.98,Credit Card
+TRX-CLO-1002,2026-10-12 15:13:35,CUST-135,Male,33,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-67,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,6.0,53.99,31.99,Debit Card
+TRX-CLO-1003,2026-09-21 10:21:35,CUST-107,Female,43,ST-04,Metro Center,Austin,South,SKU-MEN-22,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,6.0,53.99,31.99,Credit Card
+TRX-CLO-1004,2026-08-14 17:41:35,CUST-125,Female,54,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-47,Running Shoes,Footwear,1,92.0,36.0,18.4,73.6,37.6,Digital Wallet
+TRX-CLO-1005,2026-08-17 06:54:35,CUST-106,Female,25,ST-02,Suburban Mall,Chicago,Midwest,SKU-FOO-58,Running Shoes,Footwear,1,92.0,36.0,0.0,92.0,56.0,Credit Card
+TRX-CLO-1006,2026-09-23 09:54:35,CUST-105,Other,59,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-31,Classic White Sneakers,Footwear,1,85.0,32.0,17.0,68.0,36.0,Debit Card
+TRX-CLO-1007,2026-09-26 11:11:35,CUST-121,Female,33,ST-04,Metro Center,Austin,South,SKU-WOM-14,Floral Maxi Dress,Women's Apparel,1,69.0,24.0,0.0,69.0,45.0,Digital Wallet
+TRX-CLO-1008,2026-09-05 16:08:35,CUST-132,Male,60,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-68,Silk Neck Scarf,Accessories,2,28.0,8.5,0.0,56.0,39.0,Credit Card
+TRX-CLO-1009,2026-10-22 13:09:35,CUST-109,Other,50,ST-03,Westside Galleria,Los Angeles,West,SKU-WOM-21,Floral Maxi Dress,Women's Apparel,1,69.0,24.0,0.0,69.0,45.0,Digital Wallet
+TRX-CLO-1010,2026-11-04 12:50:35,CUST-130,Other,35,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-80,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,0.0,59.99,37.99,Digital Wallet
+TRX-CLO-1011,2026-11-04 15:00:35,CUST-108,Male,46,ST-01,Downtown Flagship,New York,Northeast,SKU-MEN-30,Merino Wool Sweater,Men's Apparel,1,79.5,28.0,7.95,71.55,43.55,Debit Card
+TRX-CLO-1012,2026-10-12 08:07:35,CUST-133,Other,31,ST-02,Suburban Mall,Chicago,Midwest,SKU-FOO-29,Running Shoes,Footwear,1,92.0,36.0,13.8,78.2,42.2,Credit Card
+TRX-CLO-1013,2026-10-24 11:43:35,CUST-120,Female,22,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-40,Linen Blazer,Women's Apparel,1,95.0,35.0,19.0,76.0,41.0,Digital Wallet
+TRX-CLO-1014,2026-08-17 15:01:35,CUST-136,Female,35,ST-04,Metro Center,Austin,South,SKU-MEN-77,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,6.0,53.99,31.99,Digital Wallet
+TRX-CLO-1015,2026-09-17 12:54:35,CUST-134,Male,26,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-41,Leather Reversible Belt,Accessories,1,34.0,11.0,0.0,34.0,23.0,Credit Card
+TRX-CLO-1016,2026-10-23 09:12:35,CUST-115,Female,21,ST-02,Suburban Mall,Chicago,Midwest,SKU-FOO-52,Classic White Sneakers,Footwear,1,85.0,32.0,8.5,76.5,44.5,Credit Card
+TRX-CLO-1017,2026-09-05 14:20:35,CUST-137,Male,34,ST-04,Metro Center,Austin,South,SKU-WOM-70,High-Rise Skinny Jeans,Women's Apparel,2,64.5,22.0,19.35,109.65,65.65,Digital Wallet
+TRX-CLO-1018,2026-11-01 12:34:35,CUST-104,Other,60,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-92,Floral Maxi Dress,Women's Apparel,1,69.0,24.0,0.0,69.0,45.0,Credit Card
+TRX-CLO-1019,2026-08-22 09:24:35,CUST-128,Female,36,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-69,Canvas Tote Bag,Accessories,1,22.0,7.0,0.0,22.0,15.0,Credit Card
+TRX-CLO-1020,2026-08-15 16:46:35,CUST-116,Female,45,ST-01,Downtown Flagship,New York,Northeast,SKU-MEN-72,Oxford Cotton Shirt,Men's Apparel,2,45.0,16.0,18.0,72.0,40.0,Debit Card
+TRX-CLO-1021,2026-09-26 06:36:35,CUST-130,Male,46,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-99,Leather Reversible Belt,Accessories,1,34.0,11.0,3.4,30.6,19.6,BNPL
+TRX-CLO-1022,2026-09-15 09:15:35,CUST-121,Female,22,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-84,Leather Reversible Belt,Accessories,1,34.0,11.0,0.0,34.0,23.0,Debit Card
+TRX-CLO-1023,2026-09-01 07:50:35,CUST-126,Female,55,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-41,Floral Maxi Dress,Women's Apparel,1,69.0,24.0,10.35,58.65,34.65,Debit Card
+TRX-CLO-1024,2026-10-01 16:49:35,CUST-117,Female,61,ST-01,Downtown Flagship,New York,Northeast,SKU-MEN-50,Merino Wool Sweater,Men's Apparel,1,79.5,28.0,0.0,79.5,51.5,Credit Card
+TRX-CLO-1025,2026-10-06 12:11:35,CUST-130,Other,55,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-22,Leather Reversible Belt,Accessories,2,34.0,11.0,0.0,68.0,46.0,Credit Card
+TRX-CLO-1026,2026-08-25 12:08:35,CUST-119,Female,47,ST-03,Westside Galleria,Los Angeles,West,SKU-WOM-79,Linen Blazer,Women's Apparel,1,95.0,35.0,0.0,95.0,60.0,Digital Wallet
+TRX-CLO-1027,2026-11-01 08:08:35,CUST-107,Other,54,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-29,Merino Wool Sweater,Men's Apparel,1,79.5,28.0,0.0,79.5,51.5,Credit Card
+TRX-CLO-1028,2026-09-04 16:52:35,CUST-117,Female,24,ST-03,Westside Galleria,Los Angeles,West,SKU-WOM-91,Linen Blazer,Women's Apparel,2,95.0,35.0,0.0,190.0,120.0,Credit Card
+TRX-CLO-1029,2026-09-20 08:52:35,CUST-129,Other,64,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-64,Classic White Sneakers,Footwear,4,85.0,32.0,0.0,340.0,212.0,Debit Card
+TRX-CLO-1030,2026-10-17 07:05:35,CUST-128,Female,21,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-49,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,0.0,59.99,37.99,Credit Card
+TRX-CLO-1031,2026-11-04 09:54:35,CUST-127,Other,28,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-40,Oxford Cotton Shirt,Men's Apparel,1,45.0,16.0,4.5,40.5,24.5,Digital Wallet
+TRX-CLO-1032,2026-08-31 18:11:35,CUST-116,Male,29,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-99,High-Rise Skinny Jeans,Women's Apparel,1,64.5,22.0,12.9,51.6,29.6,Credit Card
+TRX-CLO-1033,2026-09-03 13:34:35,CUST-115,Female,20,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-94,Oxford Cotton Shirt,Men's Apparel,1,45.0,16.0,4.5,40.5,24.5,Credit Card
+TRX-CLO-1034,2026-09-13 11:53:35,CUST-135,Male,20,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-24,Leather Ankle Boots,Footwear,1,120.0,48.0,12.0,108.0,60.0,Digital Wallet
+TRX-CLO-1035,2026-08-13 07:50:35,CUST-121,Male,57,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-75,Classic White Sneakers,Footwear,1,85.0,32.0,8.5,76.5,44.5,Credit Card
+TRX-CLO-1036,2026-10-03 06:45:35,CUST-113,Male,46,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-18,High-Rise Skinny Jeans,Women's Apparel,3,64.5,22.0,0.0,193.5,127.5,BNPL
+TRX-CLO-1037,2026-11-01 07:58:35,CUST-127,Male,44,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-99,Running Shoes,Footwear,3,92.0,36.0,0.0,276.0,168.0,Credit Card
+TRX-CLO-1038,2026-11-02 12:55:35,CUST-137,Male,44,ST-04,Metro Center,Austin,South,SKU-WOM-80,Floral Maxi Dress,Women's Apparel,2,69.0,24.0,0.0,138.0,90.0,Digital Wallet
+TRX-CLO-1039,2026-10-03 15:50:35,CUST-129,Other,32,ST-02,Suburban Mall,Chicago,Midwest,SKU-FOO-75,Leather Ankle Boots,Footwear,2,120.0,48.0,0.0,240.0,144.0,Debit Card
+TRX-CLO-1040,2026-09-14 14:54:35,CUST-116,Other,38,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-38,Linen Blazer,Women's Apparel,1,95.0,35.0,0.0,95.0,60.0,Digital Wallet
+TRX-CLO-1041,2026-09-09 13:51:35,CUST-127,Other,55,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-34,Floral Maxi Dress,Women's Apparel,2,69.0,24.0,0.0,138.0,90.0,Digital Wallet
+TRX-CLO-1042,2026-09-09 08:53:35,CUST-107,Male,33,ST-04,Metro Center,Austin,South,SKU-ACC-32,Silk Neck Scarf,Accessories,2,28.0,8.5,8.4,47.6,30.6,Digital Wallet
+TRX-CLO-1043,2026-08-24 13:20:35,CUST-136,Other,39,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-66,Leather Reversible Belt,Accessories,2,34.0,11.0,6.8,61.2,39.2,Debit Card
+TRX-CLO-1044,2026-08-29 18:07:35,CUST-116,Other,36,ST-04,Metro Center,Austin,South,SKU-ACC-76,Canvas Tote Bag,Accessories,1,22.0,7.0,0.0,22.0,15.0,Debit Card
+TRX-CLO-1045,2026-08-18 17:30:35,CUST-135,Female,27,ST-04,Metro Center,Austin,South,SKU-WOM-29,High-Rise Skinny Jeans,Women's Apparel,1,64.5,22.0,0.0,64.5,42.5,Credit Card
+TRX-CLO-1046,2026-08-17 12:38:35,CUST-104,Female,45,ST-02,Suburban Mall,Chicago,Midwest,SKU-WOM-59,Linen Blazer,Women's Apparel,1,95.0,35.0,0.0,95.0,60.0,Cash
+TRX-CLO-1047,2026-10-09 06:34:35,CUST-127,Other,53,ST-04,Metro Center,Austin,South,SKU-MEN-87,Merino Wool Sweater,Men's Apparel,1,79.5,28.0,0.0,79.5,51.5,Cash
+TRX-CLO-1048,2026-10-03 13:13:35,CUST-126,Other,29,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-69,Leather Reversible Belt,Accessories,1,34.0,11.0,3.4,30.6,19.6,Cash
+TRX-CLO-1049,2026-08-19 16:39:35,CUST-104,Male,43,ST-01,Downtown Flagship,New York,Northeast,SKU-MEN-51,Oxford Cotton Shirt,Men's Apparel,1,45.0,16.0,0.0,45.0,29.0,Credit Card
+TRX-CLO-1050,2026-09-13 12:28:35,CUST-135,Female,41,ST-04,Metro Center,Austin,South,SKU-FOO-38,Leather Ankle Boots,Footwear,2,120.0,48.0,0.0,240.0,144.0,Debit Card
+TRX-CLO-1051,2026-09-03 06:51:35,CUST-108,Other,32,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-69,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,0.0,59.99,37.99,Debit Card
+TRX-CLO-1052,2026-08-29 10:18:35,CUST-137,Other,43,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-60,Classic White Sneakers,Footwear,1,85.0,32.0,17.0,68.0,36.0,BNPL
+TRX-CLO-1053,2026-08-22 18:01:35,CUST-108,Other,21,ST-02,Suburban Mall,Chicago,Midwest,SKU-WOM-54,Floral Maxi Dress,Women's Apparel,1,69.0,24.0,6.9,62.1,38.1,Debit Card
+TRX-CLO-1054,2026-08-10 13:04:35,CUST-124,Other,48,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-29,Classic White Sneakers,Footwear,1,85.0,32.0,0.0,85.0,53.0,Credit Card
+TRX-CLO-1055,2026-10-07 13:04:35,CUST-116,Female,36,ST-04,Metro Center,Austin,South,SKU-FOO-67,Running Shoes,Footwear,2,92.0,36.0,0.0,184.0,112.0,Credit Card
+TRX-CLO-1056,2026-09-21 06:43:35,CUST-114,Male,35,ST-04,Metro Center,Austin,South,SKU-ACC-53,Canvas Tote Bag,Accessories,2,22.0,7.0,0.0,44.0,30.0,Credit Card
+TRX-CLO-1057,2026-10-14 09:17:35,CUST-136,Female,63,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-70,Running Shoes,Footwear,1,92.0,36.0,0.0,92.0,56.0,Debit Card
+TRX-CLO-1058,2026-08-20 10:26:35,CUST-138,Male,49,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-80,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Debit Card
+TRX-CLO-1059,2026-09-23 17:41:35,CUST-108,Other,31,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-50,Canvas Tote Bag,Accessories,1,22.0,7.0,0.0,22.0,15.0,Credit Card
+TRX-CLO-1060,2026-10-09 10:58:35,CUST-139,Male,25,ST-02,Suburban Mall,Chicago,Midwest,SKU-WOM-34,Floral Maxi Dress,Women's Apparel,1,69.0,24.0,6.9,62.1,38.1,Credit Card
+TRX-CLO-1061,2026-08-10 17:46:35,CUST-104,Other,37,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-99,Classic White Sneakers,Footwear,1,85.0,32.0,0.0,85.0,53.0,BNPL
+TRX-CLO-1062,2026-10-21 10:42:35,CUST-104,Male,49,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-24,Leather Reversible Belt,Accessories,1,34.0,11.0,0.0,34.0,23.0,Digital Wallet
+TRX-CLO-1063,2026-10-21 16:55:35,CUST-137,Male,24,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-41,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Credit Card
+TRX-CLO-1064,2026-10-14 12:40:35,CUST-138,Male,38,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-82,Canvas Tote Bag,Accessories,3,22.0,7.0,0.0,66.0,45.0,Debit Card
+TRX-CLO-1065,2026-09-11 16:17:35,CUST-105,Female,19,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-62,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,0.0,59.99,37.99,Debit Card
+TRX-CLO-1066,2026-09-07 10:57:35,CUST-105,Other,33,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-43,Silk Neck Scarf,Accessories,1,28.0,8.5,4.2,23.8,15.3,Digital Wallet
+TRX-CLO-1067,2026-10-17 09:53:35,CUST-110,Female,22,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-31,High-Rise Skinny Jeans,Women's Apparel,1,64.5,22.0,0.0,64.5,42.5,Digital Wallet
+TRX-CLO-1068,2026-10-07 17:31:35,CUST-133,Other,50,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-66,Leather Ankle Boots,Footwear,2,120.0,48.0,48.0,192.0,96.0,Credit Card
+TRX-CLO-1069,2026-10-25 10:13:35,CUST-137,Other,20,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-96,Oxford Cotton Shirt,Men's Apparel,1,45.0,16.0,9.0,36.0,20.0,Digital Wallet
+TRX-CLO-1070,2026-10-14 16:40:35,CUST-138,Male,59,ST-04,Metro Center,Austin,South,SKU-MEN-72,Slim Fit Jeans,Men's Apparel,3,59.99,22.0,0.0,179.97,113.97,BNPL
+TRX-CLO-1071,2026-09-20 11:54:35,CUST-127,Other,50,ST-04,Metro Center,Austin,South,SKU-ACC-46,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Debit Card
+TRX-CLO-1072,2026-10-06 07:32:35,CUST-126,Other,19,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-94,Canvas Tote Bag,Accessories,1,22.0,7.0,0.0,22.0,15.0,Digital Wallet
+TRX-CLO-1073,2026-09-02 14:35:35,CUST-129,Female,32,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-44,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Debit Card
+TRX-CLO-1074,2026-08-24 06:52:35,CUST-111,Male,54,ST-04,Metro Center,Austin,South,SKU-FOO-11,Leather Ankle Boots,Footwear,1,120.0,48.0,0.0,120.0,72.0,Debit Card
+TRX-CLO-1075,2026-10-07 07:53:35,CUST-119,Other,64,ST-01,Downtown Flagship,New York,Northeast,SKU-MEN-44,Slim Fit Jeans,Men's Apparel,2,59.99,22.0,0.0,119.98,75.98,Credit Card
+TRX-CLO-1076,2026-10-06 14:21:35,CUST-133,Other,27,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-18,Silk Neck Scarf,Accessories,1,28.0,8.5,5.6,22.4,13.9,Credit Card
+TRX-CLO-1077,2026-08-09 10:58:35,CUST-132,Female,47,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-78,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Debit Card
+TRX-CLO-1078,2026-10-06 12:07:35,CUST-137,Male,33,ST-04,Metro Center,Austin,South,SKU-FOO-62,Running Shoes,Footwear,1,92.0,36.0,9.2,82.8,46.8,Credit Card
+TRX-CLO-1079,2026-09-27 17:02:35,CUST-132,Female,27,ST-04,Metro Center,Austin,South,SKU-ACC-74,Canvas Tote Bag,Accessories,2,22.0,7.0,8.8,35.2,21.2,BNPL
+TRX-CLO-1080,2026-08-21 15:10:35,CUST-127,Other,28,ST-04,Metro Center,Austin,South,SKU-FOO-19,Classic White Sneakers,Footwear,1,85.0,32.0,8.5,76.5,44.5,Debit Card
+TRX-CLO-1081,2026-10-31 08:06:35,CUST-135,Male,39,ST-04,Metro Center,Austin,South,SKU-FOO-90,Leather Ankle Boots,Footwear,1,120.0,48.0,12.0,108.0,60.0,Digital Wallet
+TRX-CLO-1082,2026-10-27 07:27:35,CUST-115,Other,24,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-65,Canvas Tote Bag,Accessories,1,22.0,7.0,4.4,17.6,10.6,BNPL
+TRX-CLO-1083,2026-11-05 11:09:35,CUST-104,Male,41,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-57,Oxford Cotton Shirt,Men's Apparel,1,45.0,16.0,0.0,45.0,29.0,Credit Card
+TRX-CLO-1084,2026-10-20 17:02:35,CUST-140,Male,58,ST-04,Metro Center,Austin,South,SKU-WOM-97,Linen Blazer,Women's Apparel,1,95.0,35.0,0.0,95.0,60.0,Credit Card
+TRX-CLO-1085,2026-10-29 10:41:35,CUST-130,Male,62,ST-04,Metro Center,Austin,South,SKU-WOM-79,Floral Maxi Dress,Women's Apparel,1,69.0,24.0,0.0,69.0,45.0,Credit Card
+TRX-CLO-1086,2026-10-29 12:56:35,CUST-113,Male,49,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-23,Silk Neck Scarf,Accessories,1,28.0,8.5,4.2,23.8,15.3,Credit Card
+TRX-CLO-1087,2026-11-06 10:13:35,CUST-118,Female,55,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-97,Running Shoes,Footwear,4,92.0,36.0,36.8,331.2,187.2,Digital Wallet
+TRX-CLO-1088,2026-09-14 09:50:35,CUST-113,Other,35,ST-04,Metro Center,Austin,South,SKU-MEN-96,Merino Wool Sweater,Men's Apparel,2,79.5,28.0,0.0,159.0,103.0,Digital Wallet
+TRX-CLO-1089,2026-10-28 16:14:35,CUST-138,Male,65,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-26,Linen Blazer,Women's Apparel,1,95.0,35.0,0.0,95.0,60.0,Credit Card
+TRX-CLO-1090,2026-08-31 09:20:35,CUST-124,Other,51,ST-04,Metro Center,Austin,South,SKU-FOO-44,Leather Ankle Boots,Footwear,2,120.0,48.0,36.0,204.0,108.0,Digital Wallet
+TRX-CLO-1091,2026-09-21 07:41:35,CUST-115,Other,65,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-96,Leather Ankle Boots,Footwear,3,120.0,48.0,0.0,360.0,216.0,BNPL
+TRX-CLO-1092,2026-08-10 10:46:35,CUST-117,Other,43,ST-04,Metro Center,Austin,South,SKU-FOO-91,Classic White Sneakers,Footwear,1,85.0,32.0,0.0,85.0,53.0,BNPL
+TRX-CLO-1093,2026-10-08 06:51:35,CUST-140,Female,60,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-18,Merino Wool Sweater,Men's Apparel,3,79.5,28.0,0.0,238.5,154.5,Debit Card
+TRX-CLO-1094,2026-10-31 12:19:35,CUST-120,Male,26,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-22,Canvas Tote Bag,Accessories,1,22.0,7.0,4.4,17.6,10.6,Credit Card
+TRX-CLO-1095,2026-09-25 16:59:35,CUST-138,Other,65,ST-04,Metro Center,Austin,South,SKU-WOM-29,High-Rise Skinny Jeans,Women's Apparel,2,64.5,22.0,0.0,129.0,85.0,Cash
+TRX-CLO-1096,2026-09-13 06:56:35,CUST-116,Male,25,ST-04,Metro Center,Austin,South,SKU-MEN-97,Oxford Cotton Shirt,Men's Apparel,1,45.0,16.0,0.0,45.0,29.0,Credit Card
+TRX-CLO-1097,2026-09-13 09:19:35,CUST-106,Other,32,ST-04,Metro Center,Austin,South,SKU-FOO-92,Classic White Sneakers,Footwear,3,85.0,32.0,38.25,216.75,120.75,Debit Card
+TRX-CLO-1098,2026-09-09 09:02:35,CUST-136,Female,56,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-37,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,0.0,59.99,37.99,Digital Wallet
+TRX-CLO-1099,2026-10-24 06:29:35,CUST-109,Other,35,ST-02,Suburban Mall,Chicago,Midwest,SKU-WOM-32,High-Rise Skinny Jeans,Women's Apparel,2,64.5,22.0,0.0,129.0,85.0,Credit Card
+TRX-CLO-1100,2026-09-23 09:49:35,CUST-104,Female,45,ST-01,Downtown Flagship,New York,Northeast,SKU-MEN-77,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,0.0,59.99,37.99,Credit Card
+TRX-CLO-1101,2026-09-24 14:49:35,CUST-140,Female,65,ST-04,Metro Center,Austin,South,SKU-MEN-94,Oxford Cotton Shirt,Men's Apparel,1,45.0,16.0,0.0,45.0,29.0,Debit Card
+TRX-CLO-1102,2026-08-16 14:06:35,CUST-132,Other,47,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-19,Canvas Tote Bag,Accessories,1,22.0,7.0,2.2,19.8,12.8,Cash
+TRX-CLO-1103,2026-08-17 08:29:35,CUST-121,Male,57,ST-02,Suburban Mall,Chicago,Midwest,SKU-FOO-77,Running Shoes,Footwear,1,92.0,36.0,0.0,92.0,56.0,Credit Card
+TRX-CLO-1104,2026-10-31 17:08:35,CUST-114,Male,47,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-39,Leather Reversible Belt,Accessories,2,34.0,11.0,6.8,61.2,39.2,Credit Card
+TRX-CLO-1105,2026-08-21 11:39:35,CUST-110,Other,49,ST-04,Metro Center,Austin,South,SKU-ACC-18,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Credit Card
+TRX-CLO-1106,2026-08-21 17:59:35,CUST-104,Other,54,ST-04,Metro Center,Austin,South,SKU-MEN-81,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,0.0,59.99,37.99,Credit Card
+TRX-CLO-1107,2026-11-02 13:07:35,CUST-119,Other,38,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-55,Oxford Cotton Shirt,Men's Apparel,3,45.0,16.0,0.0,135.0,87.0,Credit Card
+TRX-CLO-1108,2026-09-06 07:34:35,CUST-118,Other,33,ST-04,Metro Center,Austin,South,SKU-WOM-64,Floral Maxi Dress,Women's Apparel,2,69.0,24.0,0.0,138.0,90.0,Digital Wallet
+TRX-CLO-1109,2026-08-12 08:29:35,CUST-122,Male,19,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-33,Merino Wool Sweater,Men's Apparel,2,79.5,28.0,0.0,159.0,103.0,Digital Wallet
+TRX-CLO-1110,2026-10-29 06:17:35,CUST-127,Male,40,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-30,Leather Reversible Belt,Accessories,2,34.0,11.0,0.0,68.0,46.0,Credit Card
+TRX-CLO-1111,2026-08-15 08:22:35,CUST-106,Male,47,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-94,Running Shoes,Footwear,2,92.0,36.0,0.0,184.0,112.0,Credit Card
+TRX-CLO-1112,2026-09-05 14:19:35,CUST-138,Male,52,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-95,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Credit Card
+TRX-CLO-1113,2026-08-09 09:31:35,CUST-117,Male,39,ST-01,Downtown Flagship,New York,Northeast,SKU-WOM-25,High-Rise Skinny Jeans,Women's Apparel,3,64.5,22.0,19.35,174.15,108.15,Credit Card
+TRX-CLO-1114,2026-09-26 14:57:35,CUST-123,Female,44,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-15,Leather Reversible Belt,Accessories,1,34.0,11.0,0.0,34.0,23.0,Credit Card
+TRX-CLO-1115,2026-10-21 12:48:35,CUST-119,Female,44,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-12,Leather Reversible Belt,Accessories,1,34.0,11.0,3.4,30.6,19.6,BNPL
+TRX-CLO-1116,2026-11-05 11:17:35,CUST-128,Other,44,ST-04,Metro Center,Austin,South,SKU-WOM-77,Linen Blazer,Women's Apparel,1,95.0,35.0,0.0,95.0,60.0,Credit Card
+TRX-CLO-1117,2026-09-06 12:01:35,CUST-108,Other,51,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-34,Running Shoes,Footwear,1,92.0,36.0,0.0,92.0,56.0,Cash
+TRX-CLO-1118,2026-09-08 07:21:35,CUST-110,Other,23,ST-02,Suburban Mall,Chicago,Midwest,SKU-FOO-32,Leather Ankle Boots,Footwear,1,120.0,48.0,0.0,120.0,72.0,BNPL
+TRX-CLO-1119,2026-11-04 15:53:35,CUST-121,Female,47,ST-04,Metro Center,Austin,South,SKU-ACC-18,Silk Neck Scarf,Accessories,1,28.0,8.5,2.8,25.2,16.7,Debit Card
+TRX-CLO-1120,2026-09-23 14:16:35,CUST-104,Male,37,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-19,Leather Ankle Boots,Footwear,1,120.0,48.0,0.0,120.0,72.0,Debit Card
+TRX-CLO-1121,2026-10-07 15:47:35,CUST-103,Male,55,ST-04,Metro Center,Austin,South,SKU-MEN-93,Merino Wool Sweater,Men's Apparel,3,79.5,28.0,23.85,214.65,130.65,Credit Card
+TRX-CLO-1122,2026-08-16 13:18:35,CUST-106,Other,60,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-32,Canvas Tote Bag,Accessories,2,22.0,7.0,6.6,37.4,23.4,Credit Card
+TRX-CLO-1123,2026-09-24 12:10:35,CUST-122,Other,57,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-16,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Digital Wallet
+TRX-CLO-1124,2026-08-21 14:55:35,CUST-139,Female,40,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-20,Classic White Sneakers,Footwear,1,85.0,32.0,0.0,85.0,53.0,Debit Card
+TRX-CLO-1125,2026-10-31 17:54:35,CUST-106,Male,54,ST-03,Westside Galleria,Los Angeles,West,SKU-WOM-58,High-Rise Skinny Jeans,Women's Apparel,1,64.5,22.0,0.0,64.5,42.5,Debit Card
+TRX-CLO-1126,2026-10-30 16:39:35,CUST-120,Female,32,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-53,Classic White Sneakers,Footwear,1,85.0,32.0,0.0,85.0,53.0,BNPL
+TRX-CLO-1127,2026-08-26 08:16:35,CUST-133,Other,52,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-14,Leather Reversible Belt,Accessories,1,34.0,11.0,3.4,30.6,19.6,Debit Card
+TRX-CLO-1128,2026-08-28 08:23:35,CUST-111,Other,47,ST-04,Metro Center,Austin,South,SKU-WOM-15,Linen Blazer,Women's Apparel,2,95.0,35.0,19.0,171.0,101.0,Credit Card
+TRX-CLO-1129,2026-10-05 09:46:35,CUST-131,Female,42,ST-03,Westside Galleria,Los Angeles,West,SKU-WOM-96,High-Rise Skinny Jeans,Women's Apparel,1,64.5,22.0,12.9,51.6,29.6,BNPL
+TRX-CLO-1130,2026-09-26 14:45:35,CUST-113,Other,27,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-42,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Credit Card
+TRX-CLO-1131,2026-10-14 07:30:35,CUST-129,Other,28,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-65,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,Credit Card
+TRX-CLO-1132,2026-08-12 12:15:35,CUST-125,Female,42,ST-03,Westside Galleria,Los Angeles,West,SKU-WOM-38,High-Rise Skinny Jeans,Women's Apparel,1,64.5,22.0,0.0,64.5,42.5,Credit Card
+TRX-CLO-1133,2026-08-27 08:14:35,CUST-109,Other,49,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-67,Merino Wool Sweater,Men's Apparel,1,79.5,28.0,11.92,67.58,39.58,Debit Card
+TRX-CLO-1134,2026-09-05 08:47:35,CUST-128,Female,37,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-40,Slim Fit Jeans,Men's Apparel,3,59.99,22.0,18.0,161.97,95.97,Credit Card
+TRX-CLO-1135,2026-10-29 15:41:35,CUST-132,Other,53,ST-04,Metro Center,Austin,South,SKU-MEN-12,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,9.0,50.99,28.99,Debit Card
+TRX-CLO-1136,2026-09-15 12:12:35,CUST-127,Female,61,ST-02,Suburban Mall,Chicago,Midwest,SKU-WOM-95,Linen Blazer,Women's Apparel,1,95.0,35.0,0.0,95.0,60.0,Credit Card
+TRX-CLO-1137,2026-09-27 13:14:35,CUST-117,Other,20,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-55,Classic White Sneakers,Footwear,1,85.0,32.0,17.0,68.0,36.0,Digital Wallet
+TRX-CLO-1138,2026-10-22 18:00:35,CUST-135,Male,60,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-32,Classic White Sneakers,Footwear,1,85.0,32.0,0.0,85.0,53.0,Digital Wallet
+TRX-CLO-1139,2026-10-28 09:03:35,CUST-130,Female,37,ST-04,Metro Center,Austin,South,SKU-ACC-35,Canvas Tote Bag,Accessories,1,22.0,7.0,2.2,19.8,12.8,Credit Card
+TRX-CLO-1140,2026-09-17 14:37:35,CUST-117,Female,60,ST-03,Westside Galleria,Los Angeles,West,SKU-WOM-34,Floral Maxi Dress,Women's Apparel,4,69.0,24.0,0.0,276.0,180.0,Credit Card
+TRX-CLO-1141,2026-09-12 08:03:35,CUST-129,Male,40,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-33,Merino Wool Sweater,Men's Apparel,1,79.5,28.0,11.92,67.58,39.58,Debit Card
+TRX-CLO-1142,2026-08-19 17:39:35,CUST-112,Other,37,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-51,Silk Neck Scarf,Accessories,1,28.0,8.5,2.8,25.2,16.7,Credit Card
+TRX-CLO-1143,2026-09-17 13:50:35,CUST-129,Male,47,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-15,Running Shoes,Footwear,2,92.0,36.0,0.0,184.0,112.0,Digital Wallet
+TRX-CLO-1144,2026-09-13 17:02:35,CUST-126,Male,51,ST-04,Metro Center,Austin,South,SKU-FOO-96,Running Shoes,Footwear,3,92.0,36.0,0.0,276.0,168.0,Credit Card
+TRX-CLO-1145,2026-08-13 08:16:35,CUST-124,Male,55,ST-04,Metro Center,Austin,South,SKU-MEN-14,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,6.0,53.99,31.99,Debit Card
+TRX-CLO-1146,2026-10-04 07:48:35,CUST-121,Other,36,ST-03,Westside Galleria,Los Angeles,West,SKU-ACC-41,Silk Neck Scarf,Accessories,1,28.0,8.5,0.0,28.0,19.5,BNPL
+TRX-CLO-1147,2026-10-11 14:36:35,CUST-117,Other,47,ST-02,Suburban Mall,Chicago,Midwest,SKU-MEN-37,Merino Wool Sweater,Men's Apparel,3,79.5,28.0,0.0,238.5,154.5,BNPL
+TRX-CLO-1148,2026-09-03 07:20:35,CUST-129,Female,62,ST-04,Metro Center,Austin,South,SKU-FOO-50,Running Shoes,Footwear,2,92.0,36.0,0.0,184.0,112.0,Debit Card
+TRX-CLO-1149,2026-09-16 08:57:35,CUST-112,Male,51,ST-03,Westside Galleria,Los Angeles,West,SKU-MEN-38,Merino Wool Sweater,Men's Apparel,2,79.5,28.0,15.9,143.1,87.1,Credit Card
+TRX-CLO-1150,2026-10-11 06:35:35,CUST-136,Female,58,ST-02,Suburban Mall,Chicago,Midwest,SKU-WOM-21,Floral Maxi Dress,Women's Apparel,1,69.0,24.0,0.0,69.0,45.0,Credit Card
+TRX-CLO-1151,2026-10-15 13:01:35,CUST-109,Male,60,ST-04,Metro Center,Austin,South,SKU-ACC-19,Canvas Tote Bag,Accessories,1,22.0,7.0,0.0,22.0,15.0,Credit Card
+TRX-CLO-1152,2026-08-25 12:44:35,CUST-108,Other,28,ST-02,Suburban Mall,Chicago,Midwest,SKU-FOO-48,Classic White Sneakers,Footwear,3,85.0,32.0,0.0,255.0,159.0,Credit Card
+TRX-CLO-1153,2026-09-22 15:09:35,CUST-113,Other,54,ST-02,Suburban Mall,Chicago,Midwest,SKU-FOO-45,Running Shoes,Footwear,1,92.0,36.0,0.0,92.0,56.0,Credit Card
+TRX-CLO-1154,2026-10-12 16:22:35,CUST-111,Other,58,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-87,Running Shoes,Footwear,1,92.0,36.0,0.0,92.0,56.0,Credit Card
+TRX-CLO-1155,2026-08-14 17:01:35,CUST-137,Male,58,ST-01,Downtown Flagship,New York,Northeast,SKU-MEN-91,Slim Fit Jeans,Men's Apparel,1,59.99,22.0,6.0,53.99,31.99,Credit Card
+TRX-CLO-1156,2026-10-09 10:03:35,CUST-130,Female,63,ST-03,Westside Galleria,Los Angeles,West,SKU-FOO-17,Running Shoes,Footwear,2,92.0,36.0,0.0,184.0,112.0,Credit Card
+TRX-CLO-1157,2026-09-04 11:50:35,CUST-121,Other,41,ST-04,Metro Center,Austin,South,SKU-ACC-61,Silk Neck Scarf,Accessories,1,28.0,8.5,4.2,23.8,15.3,Credit Card
+TRX-CLO-1158,2026-09-18 09:41:35,CUST-110,Female,22,ST-01,Downtown Flagship,New York,Northeast,SKU-FOO-47,Running Shoes,Footwear,1,92.0,36.0,0.0,92.0,56.0,BNPL
+TRX-CLO-1159,2026-09-19 15:58:35,CUST-132,Other,48,ST-02,Suburban Mall,Chicago,Midwest,SKU-ACC-73,Leather Reversible Belt,Accessories,1,34.0,11.0,3.4,30.6,19.6,Digital Wallet
+TRX-CLO-1160,2026-09-28 14:41:35,CUST-123,Female,22,ST-01,Downtown Flagship,New York,Northeast,SKU-ACC-46,Leather Reversible Belt,Accessories,3,34.0,11.0,0.0,102.0,69.0,Debit Card
