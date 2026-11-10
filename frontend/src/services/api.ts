@@ -24,25 +24,42 @@ import {
   ConvertResponse,
 } from "@/types/api";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") || "http://localhost:8000";
+const getApiBaseUrl = (): string => {
+  const envUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
+  if (envUrl && envUrl !== "http://localhost:8000") {
+    return envUrl.replace(/\/+$/, "");
+  }
+  // When running in browser on any non-localhost host (like Vercel), use live Render backend
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname !== "localhost" &&
+    window.location.hostname !== "127.0.0.1"
+  ) {
+    return "https://retail-insights-backend.onrender.com";
+  }
+  return envUrl ? envUrl.replace(/\/+$/, "") : "http://localhost:8000";
+};
 
 class ApiService {
   private baseUrl: string;
 
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
+  constructor(baseUrl?: string) {
+    this.baseUrl = baseUrl || "";
   }
 
   public getBaseUrl(): string {
-    return this.baseUrl;
+    if (this.baseUrl && this.baseUrl !== "http://localhost:8000") {
+      return this.baseUrl;
+    }
+    return getApiBaseUrl();
   }
 
   /**
    * Helper method for performing HTTP requests with timeout and error handling.
    */
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const url = `${this.baseUrl}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+    const activeBaseUrl = this.getBaseUrl();
+    const url = `${activeBaseUrl}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
     const controller = new AbortController();
     // 60s timeout to gracefully accommodate Render free tier cold-starts (30-50s) and large CSV uploads
@@ -296,4 +313,4 @@ class ApiService {
 }
 
 // Export singleton instance
-export const apiService = new ApiService(API_BASE_URL);
+export const apiService = new ApiService();
