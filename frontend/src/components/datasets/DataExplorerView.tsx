@@ -51,6 +51,7 @@ export const DataExplorerView: React.FC<DataExplorerViewProps> = ({
   const [pageSize, setPageSize] = useState<number>(20);
   const [showMapping, setShowMapping] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isActivating, setIsActivating] = useState<boolean>(false);
 
   // Update selected dataset when active dataset or list changes
   useEffect(() => {
@@ -175,10 +176,20 @@ export const DataExplorerView: React.FC<DataExplorerViewProps> = ({
               ) : (
                 <button
                   type="button"
-                  onClick={() => selectedDataset && onActivate(selectedDataset.dataset_id)}
-                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 transition-colors"
+                  disabled={isActivating}
+                  onClick={async () => {
+                    if (!selectedDataset) return;
+                    setIsActivating(true);
+                    try {
+                      await onActivate(selectedDataset.dataset_id);
+                    } finally {
+                      setIsActivating(false);
+                    }
+                  }}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 transition-colors flex items-center gap-1.5 disabled:opacity-50"
                 >
-                  Set as Active
+                  {isActivating && <Loader2 className="w-3 h-3 animate-spin" />}
+                  <span>{isActivating ? "Activating..." : "Set as Active"}</span>
                 </button>
               )}
             </div>

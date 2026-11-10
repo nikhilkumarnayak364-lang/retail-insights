@@ -45,7 +45,8 @@ class ApiService {
     const url = `${this.baseUrl}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout for larger uploads
+    // 60s timeout to gracefully accommodate Render free tier cold-starts (30-50s) and large CSV uploads
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
 
     try {
       const response = await fetch(url, {
