@@ -44,9 +44,8 @@ class AnalyticsService:
 
     @staticmethod
     def _get_records(dataset_id: str) -> list:
-        """Retrieves raw normalized records for analytical computation."""
-        records_resp = dataset_repo.get_dataset_records(dataset_id=dataset_id, page=1, page_size=25000)
-        return records_resp.get("items", [])
+        """Retrieves raw normalized records for analytical computation without pagination truncation."""
+        return dataset_repo.get_all_dataset_records(dataset_id=dataset_id)
 
     @staticmethod
     def get_sales_analytics(dataset_id: Optional[str] = None) -> Dict[str, Any]:

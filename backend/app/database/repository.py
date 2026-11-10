@@ -103,7 +103,14 @@ class DatasetRepository:
             logger.info("Saved dataset %s with %d rows to MongoDB Atlas", dataset_id, len(records))
             return dataset_doc
 
-        # 2. Local Fallback Storage
+        # 2. Local Fallback Storage (Development Only)
+        if settings.ENVIRONMENT.lower() == "production":
+            logger.critical("MongoDB Atlas is unreachable. Rejecting silent local fallback in production environment.")
+            raise RuntimeError(
+                "Primary database (MongoDB Atlas) is unavailable. "
+                "To prevent ephemeral data loss, local fallback storage is prohibited in production."
+            )
+
         store = self._read_local_store()
         if set_as_active:
             for ds in store.get("datasets", []):
@@ -161,6 +168,10 @@ class DatasetRepository:
             res = db.datasets.update_one({"dataset_id": dataset_id}, {"$set": {"is_active": True}})
             return res.modified_count > 0 or res.matched_count > 0
 
+        if settings.ENVIRONMENT.lower() == "production":
+            logger.critical("MongoDB Atlas is unreachable. Rejecting dataset activation in production.")
+            raise RuntimeError("Database unavailable. Cannot activate dataset in production.")
+
         store = self._read_local_store()
         found = False
         for ds in store.get("datasets", []):
@@ -175,6 +186,33 @@ class DatasetRepository:
             self._write_local_store(store)
             return True
         return False
+
+    def get_all_dataset_records(
+        self,
+        dataset_id: str,
+        projection: Optional[Dict[str, int]] = None,
+    ) -> List[Dict[str, Any]]:
+        """Retrieves ALL records belonging to a dataset without pagination limits.
+        
+        This method is dedicated to analytical engines, summary metrics, and CSV exports
+        to prevent unintended record truncation.
+        """
+        if self.is_mongo_active:
+            db: Database = db_manager.get_database()  # type: ignore
+            proj = dict(projection) if projection else {"_id": 0}
+            if "_id" not in proj:
+                proj["_id"] = 0
+            # Use batch_size for memory-efficient streaming across large record sets
+            cursor = db.transactions.find({"dataset_id": dataset_id}, proj).batch_size(1000)
+            return list(cursor)
+
+        store = self._read_local_store()
+        all_records = store.get("transactions", {}).get(dataset_id, [])
+        if projection:
+            included_keys = [k for k, v in projection.items() if v and k != "_id"]
+            if included_keys:
+                return [{k: r[k] for k in included_keys if k in r} for r in all_records]
+        return list(all_records)
 
     def get_dataset_records(
         self,
@@ -266,6 +304,10 @@ class DatasetRepository:
             db.transactions.delete_many({"dataset_id": dataset_id})
             logger.info("Deleted dataset %s from MongoDB Atlas", dataset_id)
             return True
+
+        if settings.ENVIRONMENT.lower() == "production":
+            logger.critical("MongoDB Atlas is unreachable. Rejecting dataset deletion in production.")
+            raise RuntimeError("Database unavailable. Cannot delete dataset in production.")
 
         store = self._read_local_store()
         store["datasets"] = [d for d in store.get("datasets", []) if d.get("dataset_id") != dataset_id]

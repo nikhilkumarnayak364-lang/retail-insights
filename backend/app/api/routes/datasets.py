@@ -1,7 +1,7 @@
 """Dataset ingestion and management API endpoints."""
 
 from typing import Optional
-from fastapi import APIRouter, UploadFile, File, Query, Path, status, Response
+from fastapi import APIRouter, UploadFile, File, Query, Path, status, Response, Depends
 from app.schemas.dataset import (
     DatasetMetadata,
     DatasetUploadResponse,
@@ -10,6 +10,7 @@ from app.schemas.dataset import (
     DatasetActionResponse,
 )
 from app.services.dataset_service import DatasetService
+from app.core.security import verify_admin_access
 
 router = APIRouter(prefix="/datasets", tags=["Dataset Management & Ingestion"])
 
@@ -20,6 +21,7 @@ router = APIRouter(prefix="/datasets", tags=["Dataset Management & Ingestion"])
     status_code=status.HTTP_201_CREATED,
     summary="Upload & Ingest Retail CSV Dataset",
     description="Accepts a retail CSV file, automatically normalizes columns, validates schemas, calculates metrics, and stores the records.",
+    dependencies=[Depends(verify_admin_access)],
 )
 async def upload_dataset(
     file: UploadFile = File(..., description="Retail sales CSV file"),
@@ -113,6 +115,7 @@ async def preview_dataset(
     status_code=status.HTTP_200_OK,
     summary="Activate Dataset",
     description="Marks a dataset as the active dataset for platform-wide analytics.",
+    dependencies=[Depends(verify_admin_access)],
 )
 async def activate_dataset(
     dataset_id: str = Path(..., description="Dataset ID"),
@@ -128,6 +131,7 @@ async def activate_dataset(
     status_code=status.HTTP_200_OK,
     summary="Delete Dataset",
     description="Deletes dataset metadata and removes all associated transaction records.",
+    dependencies=[Depends(verify_admin_access)],
 )
 async def delete_dataset(
     dataset_id: str = Path(..., description="Dataset ID"),
@@ -143,6 +147,7 @@ async def delete_dataset(
     status_code=status.HTTP_201_CREATED,
     summary="Load Pre-Packaged Sample Retail Dataset",
     description="Generates and ingests realistic retail transactions for testing. Types: clothing, grocery, electronics.",
+    dependencies=[Depends(verify_admin_access)],
 )
 async def load_sample_dataset(
     retail_type: str = Path(..., description="Retail business vertical (clothing, grocery, electronics)"),
@@ -161,6 +166,7 @@ async def load_sample_dataset(
     status_code=status.HTTP_200_OK,
     summary="Export Clean Normalized Dataset as CSV",
     description="Downloads the normalized transaction dataset as a standard clean CSV file.",
+    dependencies=[Depends(verify_admin_access)],
 )
 async def export_dataset(
     dataset_id: str = Path(..., description="Dataset ID to export"),

@@ -52,7 +52,7 @@ def compute_category_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         revenue=("total_amount", "sum"),
         profit=("profit", "sum"),
         units_sold=("quantity", "sum"),
-        transactions=("transaction_id", "count") if "transaction_id" in df.columns else ("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
         sku_count=("product_name", "nunique"),
     ).reset_index()
 
@@ -69,7 +69,7 @@ def compute_category_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         revenue=("total_amount", "sum"),
         profit=("profit", "sum"),
         units_sold=("quantity", "sum"),
-        transactions=("transaction_id", "count") if "transaction_id" in df.columns else ("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
     ).reset_index()
 
     sub_grouped["profit_margin_pct"] = np.where(
@@ -130,6 +130,12 @@ def compute_category_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     hhi = float((shares ** 2).sum())
     diversity_index = round(max(0.0, min(1.0, 1.0 - (hhi / 10000.0))), 2)
 
+    cost_data_available = True
+    if "cost_is_estimated" in df.columns:
+        cost_data_available = not bool(df["cost_is_estimated"].all())
+    elif "unit_cost" not in df.columns and "profit" not in df.columns:
+        cost_data_available = False
+
     return {
         "summary": {
             "total_categories": total_categories,
@@ -138,6 +144,8 @@ def compute_category_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
             "top_category_margin": top_cat_margin,
             "avg_category_margin_pct": round(avg_margin, 2),
             "category_diversity_index": diversity_index,
+            "cost_data_available": cost_data_available,
+            "profit_type": "actual" if cost_data_available else "estimated",
         },
         "categories": categories_list,
     }

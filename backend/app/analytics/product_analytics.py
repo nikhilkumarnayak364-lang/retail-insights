@@ -58,7 +58,7 @@ def compute_product_analytics(
         revenue=("total_amount", "sum"),
         profit=("profit", "sum"),
         units_sold=("quantity", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
         product_id=("product_id", "first"),
     ).reset_index()
 
@@ -121,7 +121,7 @@ def compute_product_analytics(
     tier_grouped = df.groupby("price_tier", observed=False).agg(
         revenue=("total_amount", "sum"),
         units_sold=("quantity", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
     ).reset_index()
 
     tier_grouped["revenue"] = tier_grouped["revenue"].round(2)
@@ -132,6 +132,12 @@ def compute_product_analytics(
     avg_price = float(df["unit_price"].mean()) if len(df) > 0 else 0.0
     overall_margin = (total_catalog_profit / total_catalog_revenue * 100) if total_catalog_revenue > 0 else 0.0
 
+    cost_data_available = True
+    if "cost_is_estimated" in df.columns:
+        cost_data_available = not bool(df["cost_is_estimated"].all())
+    elif "unit_cost" not in df.columns and "profit" not in df.columns:
+        cost_data_available = False
+
     catalog_summary = {
         "total_skus": int(df["product_name"].nunique()),
         "total_categories": int(df["category"].nunique()),
@@ -139,6 +145,8 @@ def compute_product_analytics(
         "overall_margin_pct": round(overall_margin, 2),
         "top_category": top_cat_name,
         "total_volume": total_catalog_units,
+        "cost_data_available": cost_data_available,
+        "profit_type": "actual" if cost_data_available else "estimated",
     }
 
     return {

@@ -52,7 +52,7 @@ def compute_geographic_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any
         revenue=("total_amount", "sum"),
         profit=("profit", "sum"),
         units_sold=("quantity", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
         store_count=("store_name", "nunique"),
         city_count=("city", "nunique"),
     ).reset_index().sort_values("revenue", ascending=False)
@@ -71,7 +71,7 @@ def compute_geographic_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any
         revenue=("total_amount", "sum"),
         profit=("profit", "sum"),
         units_sold=("quantity", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
         customer_count=("customer_id", "nunique") if "customer_id" in df.columns else ("total_amount", "count"),
     ).reset_index().sort_values("revenue", ascending=False)
 
@@ -91,7 +91,7 @@ def compute_geographic_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any
     # 3. City-Level Density
     city_grouped = df.groupby(["city", "region"]).agg(
         revenue=("total_amount", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
         store_count=("store_name", "nunique"),
     ).reset_index().sort_values("revenue", ascending=False).head(10)
 

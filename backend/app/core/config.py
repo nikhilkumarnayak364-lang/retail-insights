@@ -25,11 +25,22 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
         "http://localhost:8000",
         "http://127.0.0.1:8000",
+        "https://frontend-m5va.vercel.app",
     ]
 
-    # Database Configuration (Prepared for Phase 2 - MongoDB Atlas)
+    # Database Configuration
     MONGODB_URI: str = Field(default="", description="MongoDB Atlas Connection URI")
     MONGODB_DATABASE: str = Field(default="retail_insights", description="Database name")
+
+    # Security & Single-Admin Authentication
+    ADMIN_API_KEY: str = Field(
+        default="retail_bi_admin_secret_key_2026",
+        description="Single-administrator API authorization key",
+    )
+    REQUIRE_AUTH: bool = Field(
+        default=False,
+        description="Enforce authentication on mutating operations (upload, activate, delete, export)",
+    )
 
     model_config = SettingsConfigDict(
         env_file=".env",

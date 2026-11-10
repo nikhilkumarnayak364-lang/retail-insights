@@ -60,7 +60,7 @@ def compute_customer_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     # 1. Customer-Level Aggregation for RFM
     cust_grouped = df.groupby("customer_id").agg(
         monetary=("total_amount", "sum"),
-        frequency=("total_amount", "count"),
+        frequency=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
         last_purchase=("datetime", "max"),
         first_purchase=("datetime", "min"),
         total_units=("quantity", "sum"),

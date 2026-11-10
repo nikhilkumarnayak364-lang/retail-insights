@@ -17,23 +17,62 @@ import {
 } from "lucide-react";
 
 import { Sidebar, NavView } from "@/components/layout/Sidebar";
+import dynamic from "next/dynamic";
 import { TopNavbar } from "@/components/layout/TopNavbar";
 import { HealthStatusBanner } from "@/components/dashboard/HealthStatusBanner";
 import { MetricCard } from "@/components/dashboard/MetricCard";
 import { FeaturePreviewGrid } from "@/components/dashboard/FeaturePreviewGrid";
 import { DatasetUploadModal } from "@/components/datasets/DatasetUploadModal";
-import { DataExplorerView } from "@/components/datasets/DataExplorerView";
-import { SalesAnalyticsView } from "@/components/analytics/SalesAnalyticsView";
-import { ProductAnalyticsView } from "@/components/analytics/ProductAnalyticsView";
-import { CustomerAnalyticsView } from "@/components/analytics/CustomerAnalyticsView";
-import { GeographicAnalyticsView } from "@/components/analytics/GeographicAnalyticsView";
-import { CategoryAnalyticsView } from "@/components/analytics/CategoryAnalyticsView";
-import { PaymentAnalyticsView } from "@/components/analytics/PaymentAnalyticsView";
-import { BusinessInsightsView } from "@/components/insights/BusinessInsightsView";
-import { SettingsView } from "@/components/settings/SettingsView";
 import { useBackendHealth } from "@/hooks/useBackendHealth";
 import { useDatasets } from "@/hooks/useDatasets";
 import { useCurrency } from "@/context/CurrencyContext";
+
+const LoadingView = () => (
+  <div className="flex items-center justify-center min-h-[400px]">
+    <div className="flex flex-col items-center gap-3">
+      <div className="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+      <span className="text-xs font-medium text-slate-500">Loading module...</span>
+    </div>
+  </div>
+);
+
+// Dynamic imports for code-splitting heavy analytical views
+const DataExplorerView = dynamic(
+  () => import("@/components/datasets/DataExplorerView").then((m) => m.DataExplorerView),
+  { loading: LoadingView }
+);
+const SalesAnalyticsView = dynamic(
+  () => import("@/components/analytics/SalesAnalyticsView").then((m) => m.SalesAnalyticsView),
+  { loading: LoadingView }
+);
+const ProductAnalyticsView = dynamic(
+  () => import("@/components/analytics/ProductAnalyticsView").then((m) => m.ProductAnalyticsView),
+  { loading: LoadingView }
+);
+const CustomerAnalyticsView = dynamic(
+  () => import("@/components/analytics/CustomerAnalyticsView").then((m) => m.CustomerAnalyticsView),
+  { loading: LoadingView }
+);
+const GeographicAnalyticsView = dynamic(
+  () => import("@/components/analytics/GeographicAnalyticsView").then((m) => m.GeographicAnalyticsView),
+  { loading: LoadingView }
+);
+const CategoryAnalyticsView = dynamic(
+  () => import("@/components/analytics/CategoryAnalyticsView").then((m) => m.CategoryAnalyticsView),
+  { loading: LoadingView }
+);
+const PaymentAnalyticsView = dynamic(
+  () => import("@/components/analytics/PaymentAnalyticsView").then((m) => m.PaymentAnalyticsView),
+  { loading: LoadingView }
+);
+const BusinessInsightsView = dynamic(
+  () => import("@/components/insights/BusinessInsightsView").then((m) => m.BusinessInsightsView),
+  { loading: LoadingView }
+);
+const SettingsView = dynamic(
+  () => import("@/components/settings/SettingsView").then((m) => m.SettingsView),
+  { loading: LoadingView }
+);
 
 export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);

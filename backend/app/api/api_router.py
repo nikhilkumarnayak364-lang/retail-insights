@@ -1,7 +1,7 @@
 """Main API router combining all domain-specific routers."""
 
 from fastapi import APIRouter
-from app.api.routes import health, datasets, analytics, currency
+from app.api.routes import health, datasets, analytics, currency, auth
 
 api_router = APIRouter()
 
@@ -16,3 +16,6 @@ api_router.include_router(analytics.router)
 
 # Include currency routes (/api/currency)
 api_router.include_router(currency.router)
+
+# Include auth routes (/api/auth)
+api_router.include_router(auth.router)

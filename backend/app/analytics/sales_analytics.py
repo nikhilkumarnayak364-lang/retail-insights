@@ -39,6 +39,15 @@ def compute_sales_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
 
     df = pd.DataFrame(records)
 
+    # Distinguish actual profit vs estimated profit
+    cost_data_available = True
+    if "cost_is_estimated" in df.columns:
+        cost_data_available = not bool(df["cost_is_estimated"].all())
+    elif "unit_cost" not in df.columns and "profit" not in df.columns:
+        cost_data_available = False
+
+    profit_type = "actual" if cost_data_available else "estimated"
+
     # Ensure numeric columns
     for col in ["total_amount", "quantity", "unit_price", "discount", "profit"]:
         if col in df.columns:
@@ -59,9 +68,12 @@ def compute_sales_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     total_profit = float(df["profit"].sum())
     total_units = int(df["quantity"].sum())
     total_tx = len(df)
+    unique_orders = int(df["transaction_id"].nunique()) if "transaction_id" in df.columns else total_tx
     total_disc = float(df["discount"].sum())
-    aov = float(df["total_amount"].mean()) if total_tx > 0 else 0.0
-    avg_units = float(df["quantity"].mean()) if total_tx > 0 else 0.0
+    
+    # Correct formula: Average Order Value = Total Revenue / Number of Unique Orders
+    aov = float(total_rev / unique_orders) if unique_orders > 0 else 0.0
+    avg_units = float(total_units / unique_orders) if unique_orders > 0 else 0.0
     profit_margin = (total_profit / total_rev * 100) if total_rev > 0 else 0.0
 
     summary = {
@@ -69,10 +81,13 @@ def compute_sales_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         "net_profit": round(total_profit, 2),
         "total_units_sold": total_units,
         "total_transactions": total_tx,
+        "unique_orders": unique_orders,
         "avg_order_value": round(aov, 2),
         "avg_units_per_order": round(avg_units, 2),
         "total_discounts": round(total_disc, 2),
         "profit_margin_pct": round(profit_margin, 2),
+        "cost_data_available": cost_data_available,
+        "profit_type": profit_type,
     }
 
     # 2. Daily Timeline Trends
@@ -81,13 +96,18 @@ def compute_sales_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         revenue=("total_amount", "sum"),
         profit=("profit", "sum"),
         units=("quantity", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
+        total_rows=("total_amount", "count"),
     ).reset_index()
 
     daily_grouped["revenue"] = daily_grouped["revenue"].round(2)
     daily_grouped["profit"] = daily_grouped["profit"].round(2)
     daily_grouped["cumulative_revenue"] = daily_grouped["revenue"].cumsum().round(2)
-    daily_grouped["avg_order_value"] = (daily_grouped["revenue"] / daily_grouped["transactions"]).round(2)
+    daily_grouped["avg_order_value"] = np.where(
+        daily_grouped["transactions"] > 0,
+        (daily_grouped["revenue"] / daily_grouped["transactions"]).round(2),
+        0.0,
+    )
 
     timeline = daily_grouped.rename(columns={"date_only": "date"}).to_dict(orient="records")
 
@@ -96,7 +116,7 @@ def compute_sales_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     df["day_name"] = df["datetime"].dt.day_name()
     dow_grouped = df.groupby("day_name").agg(
         revenue=("total_amount", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
         units=("quantity", "sum"),
     ).reindex(day_names).fillna(0).reset_index()
 
@@ -112,7 +132,7 @@ def compute_sales_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     hours_df = pd.DataFrame({"hour": list(range(24))})
     hourly_grouped = df.groupby("hour").agg(
         revenue=("total_amount", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
     ).reset_index()
 
     hourly_merged = hours_df.merge(hourly_grouped, on="hour", how="left").fillna(0)
@@ -127,7 +147,7 @@ def compute_sales_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     if payment_col:
         pay_grouped = df.groupby(payment_col).agg(
             revenue=("total_amount", "sum"),
-            transactions=("total_amount", "count"),
+            transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
             units=("quantity", "sum"),
         ).reset_index().sort_values("revenue", ascending=False)
 

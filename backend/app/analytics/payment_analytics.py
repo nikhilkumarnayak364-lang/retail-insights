@@ -58,7 +58,7 @@ def compute_payment_analytics(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     # Group by payment method
     grouped = df.groupby("payment_method").agg(
         revenue=("total_amount", "sum"),
-        transactions=("total_amount", "count"),
+        transactions=("transaction_id", "nunique") if "transaction_id" in df.columns else ("total_amount", "count"),
         units_sold=("quantity", "sum"),
         profit=("profit", "sum"),
     ).reset_index()

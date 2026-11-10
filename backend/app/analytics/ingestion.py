@@ -173,19 +173,70 @@ def infer_retail_type(df: pd.DataFrame, hint: Optional[str] = None) -> str:
     return "general_retail"
 
 
+MAX_CSV_FILE_SIZE_BYTES = 25 * 1024 * 1024  # 25 MB server-side limit
+MAX_CSV_ROW_COUNT = 100_000  # 100,000 row safety cap
+MAX_CSV_COLUMN_COUNT = 100  # 100 column safety cap
+
+
 def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optional[str] = None) -> Dict[str, Any]:
-    """Parses raw CSV bytes, validates schema, cleans records, and returns normalized data."""
+    """Ingests raw CSV bytes, validates security boundaries, normalizes schemas,
+    coerces types, detects business domain, distinguishes actual vs estimated profit,
+    and returns standardized transaction records and analytical summary statistics.
+    """
+    # 1. Validation: File extension check
+    clean_fn = filename.strip().lower()
+    if not clean_fn.endswith(".csv"):
+        raise ValueError(f"Invalid file extension for '{filename}'. Only .csv files are supported.")
+
+    # 2. Validation: Server-side file size limit
+    file_size_bytes = len(csv_bytes)
+    if file_size_bytes == 0:
+        raise ValueError(f"The uploaded CSV file '{filename}' is empty (0 bytes).")
+    if file_size_bytes > MAX_CSV_FILE_SIZE_BYTES:
+        mb_size = round(file_size_bytes / (1024 * 1024), 2)
+        raise ValueError(
+            f"File size exceeds the 25MB server limit ({mb_size}MB provided). "
+            "Please compress or upload a dataset under 25MB."
+        )
+
+    # 3. Validation & Parsing: Robust encoding and delimiter parsing
     try:
         try:
             df = pd.read_csv(io.BytesIO(csv_bytes), encoding="utf-8")
         except UnicodeDecodeError:
             df = pd.read_csv(io.BytesIO(csv_bytes), encoding="latin-1")
     except Exception as exc:
-        raise ValueError(f"Could not parse CSV file '{filename}'. Details: {str(exc)}")
+        raise ValueError(f"Could not parse CSV file '{filename}'. Malformed format: {str(exc)}")
+
+    # 4. Validation: Column limits & duplicate header sanitization
+    if df.shape[1] == 0:
+        raise ValueError(f"The uploaded CSV file '{filename}' contains no readable columns or headers.")
+    if df.shape[1] > MAX_CSV_COLUMN_COUNT:
+        raise ValueError(
+            f"CSV file contains {df.shape[1]} columns, exceeding the maximum permitted limit of {MAX_CSV_COLUMN_COUNT} columns."
+        )
+
+    # Sanitize duplicate headers
+    seen_cols = {}
+    deduped_cols = []
+    for col in df.columns:
+        col_str = str(col).strip()
+        if col_str in seen_cols:
+            seen_cols[col_str] += 1
+            deduped_cols.append(f"{col_str}_{seen_cols[col_str]}")
+        else:
+            seen_cols[col_str] = 0
+            deduped_cols.append(col_str)
+    df.columns = deduped_cols
 
     raw_row_count = len(df)
     if raw_row_count == 0:
         raise ValueError(f"The uploaded CSV file '{filename}' contains no data rows.")
+    if raw_row_count > MAX_CSV_ROW_COUNT:
+        raise ValueError(
+            f"CSV contains {raw_row_count:,} rows, exceeding the safe system limit of {MAX_CSV_ROW_COUNT:,} rows. "
+            "Please split large datasets into batches under 100,000 rows."
+        )
 
     df = df.dropna(how="all").copy()
 
@@ -198,6 +249,19 @@ def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optio
             "Could not identify recognizable retail transaction columns. "
             "Please ensure your CSV contains headers such as Date, Product, Quantity, and Price or Sales."
         )
+
+    # Check if user explicitly provided unit cost or profit columns
+    mapped_targets = set(column_mapping.values())
+    has_explicit_cost = "unit_cost" in mapped_targets
+    has_explicit_profit = "profit" in mapped_targets
+    cost_data_available = bool(has_explicit_cost or has_explicit_profit)
+    profit_type = "actual" if cost_data_available else "estimated"
+    cost_disclaimer = (
+        None
+        if cost_data_available
+        else "Cost and profit metrics are estimated based on retail industry benchmark COGS (60% of unit price) "
+        "because unit cost/profit columns were not present in the uploaded dataset."
+    )
 
     # Rename mapped columns
     df = df.rename(columns=column_mapping)
@@ -242,18 +306,21 @@ def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optio
             (df["quantity"] * df["unit_price"]) - df["discount"]
         ).round(2)
 
-    # 6. Unit Cost & Profit
-    if "unit_cost" in df.columns:
+    # 6. Unit Cost & Profit - Distinguish Actual vs Estimated
+    if has_explicit_cost:
         df["unit_cost"] = pd.to_numeric(df["unit_cost"], errors="coerce").fillna(0.0).round(2)
     else:
+        # Heuristic estimation marked explicitly
         df["unit_cost"] = (df["unit_price"] * 0.6).round(2)
 
-    if "profit" not in df.columns:
-        df["profit"] = (df["total_amount"] - (df["quantity"] * df["unit_cost"])).round(2)
-    else:
+    if has_explicit_profit:
         df["profit"] = pd.to_numeric(df["profit"], errors="coerce").fillna(
             df["total_amount"] - (df["quantity"] * df["unit_cost"])
         ).round(2)
+    else:
+        df["profit"] = (df["total_amount"] - (df["quantity"] * df["unit_cost"])).round(2)
+
+    df["cost_is_estimated"] = not cost_data_available
 
     # 7. Categorical strings sanitization
     for text_col in ["product_name", "product_id", "category", "subcategory", "store_id", "store_name", "customer_id", "payment_method", "city", "region"]:
@@ -269,7 +336,7 @@ def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optio
             elif text_col == "store_name":
                 df["store_name"] = "Main Store"
 
-    # 8. Transaction ID
+    # 8. Transaction ID - Ensure unique order tracking
     if "transaction_id" in df.columns:
         df["transaction_id"] = df["transaction_id"].fillna("").astype(str).str.strip()
         mask_empty = df["transaction_id"] == ""
@@ -289,7 +356,10 @@ def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optio
 
     total_revenue = float(df["total_amount"].sum())
     total_units = int(df["quantity"].sum())
-    avg_order_value = float(df["total_amount"].mean()) if clean_row_count > 0 else 0.0
+
+    # Correct Average Order Value formula: Total Revenue / Number of Unique Orders
+    unique_orders = int(df["transaction_id"].nunique()) if "transaction_id" in df.columns else clean_row_count
+    avg_order_value = float(total_revenue / unique_orders) if unique_orders > 0 else 0.0
     total_profit = float(df["profit"].sum()) if "profit" in df.columns else 0.0
 
     unique_customers = int(df["customer_id"].nunique()) if "customer_id" in df.columns else clean_row_count
@@ -301,7 +371,7 @@ def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optio
         "transaction_id", "date_str", "customer_id", "store_id", "store_name",
         "city", "region", "product_id", "product_name", "category", "subcategory",
         "quantity", "unit_price", "unit_cost", "discount", "total_amount", "profit",
-        "payment_method", "gender", "age"
+        "payment_method", "gender", "age", "cost_is_estimated"
     ] if c in df.columns]
 
     records = df[export_cols].rename(columns={"date_str": "date"}).to_dict(orient="records")
@@ -319,7 +389,11 @@ def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optio
             "total_revenue": round(total_revenue, 2),
             "total_profit": round(total_profit, 2),
             "avg_order_value": round(avg_order_value, 2),
+            "unique_orders": unique_orders,
             "total_units_sold": total_units,
+            "cost_data_available": cost_data_available,
+            "profit_type": profit_type,
+            "cost_disclaimer": cost_disclaimer,
         },
         "entities": {
             "unique_customers": unique_customers,

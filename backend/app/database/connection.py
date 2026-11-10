@@ -37,15 +37,34 @@ class DatabaseManager:
             self.client = pymongo.MongoClient(
                 settings.MONGODB_URI,
                 serverSelectionTimeoutMS=5000,
+                connectTimeoutMS=5000,
+                socketTimeoutMS=10000,
+                maxPoolSize=50,
+                minPoolSize=5,
+                retryWrites=True,
             )
-            # Verify connectivity
+            # Verify connectivity with active ping
             self.client.admin.command("ping")
             self.db = self.client[settings.MONGODB_DATABASE]
             logger.info("Successfully connected to MongoDB database: %s", settings.MONGODB_DATABASE)
+            
+            # Ensure essential compound indexes for analytics & explorer queries
+            try:
+                self.db.transactions.create_index([("dataset_id", 1), ("date", -1)])
+                self.db.transactions.create_index([("dataset_id", 1), ("transaction_id", 1)])
+                self.db.transactions.create_index([("dataset_id", 1), ("category", 1)])
+                self.db.transactions.create_index([("dataset_id", 1), ("customer_id", 1)])
+                self.db.transactions.create_index([("dataset_id", 1), ("product_name", 1)])
+                self.db.datasets.create_index([("dataset_id", 1)], unique=True)
+                self.db.datasets.create_index([("is_active", 1)])
+                logger.info("MongoDB indexes verified.")
+            except Exception as idx_err:
+                logger.warning("Could not build optional database indexes: %s", idx_err)
+
             return True
         except PyMongoError as exc:
-            logger.warning(
-                "MongoDB connection attempt failed: %s. Continuing in offline mode.",
+            logger.error(
+                "MongoDB connection attempt failed: %s.",
                 exc,
             )
             self.client = None
@@ -76,12 +95,23 @@ class DatabaseManager:
             }
 
         if self.client is not None and self.db is not None:
-            return {
-                "configured": True,
-                "status": "connected",
-                "database_name": settings.MONGODB_DATABASE,
-                "message": "Connected to MongoDB Atlas.",
-            }
+            try:
+                # Live heartbeat verification
+                self.client.admin.command("ping")
+                return {
+                    "configured": True,
+                    "status": "connected",
+                    "database_name": settings.MONGODB_DATABASE,
+                    "message": "Connected to MongoDB Atlas.",
+                }
+            except Exception as e:
+                logger.warning("MongoDB ping failed: %s", e)
+                return {
+                    "configured": True,
+                    "status": "disconnected",
+                    "database_name": settings.MONGODB_DATABASE,
+                    "message": f"MongoDB connection lost: {str(e)}",
+                }
 
         return {
             "configured": True,

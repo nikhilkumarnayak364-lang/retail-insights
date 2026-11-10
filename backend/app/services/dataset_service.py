@@ -140,11 +140,10 @@ class DatasetService:
 
     @staticmethod
     def export_dataset_csv(dataset_id: str) -> tuple[str, str]:
-        """Converts normalized dataset records into a downloadable CSV string."""
+        """Converts normalized dataset records into a downloadable CSV string, processing all records."""
         import pandas as pd
         ds = DatasetService.get_dataset(dataset_id)
-        records_resp = dataset_repo.get_dataset_records(dataset_id=dataset_id, page=1, page_size=100000)
-        items = records_resp.get("items", [])
+        items = dataset_repo.get_all_dataset_records(dataset_id=dataset_id)
         if not items:
             return "transaction_id,date,total_amount\n", f"clean_{ds.get('filename', 'dataset.csv')}"
         df = pd.DataFrame(items)
