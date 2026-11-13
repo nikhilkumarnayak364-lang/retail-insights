@@ -113,8 +113,8 @@ def test_scale_zero_truncation_500_records():
 
 
 def test_upload_security_validations():
-    """Verifies server-side CSV file validation rules."""
-    # 1. Non-CSV extension rejected
+    """Verifies server-side CSV and Excel file validation rules."""
+    # 1. Non-CSV/Excel extension rejected
     with pytest.raises(ValueError, match="Invalid file extension"):
         process_csv_content(b"test data", "malicious_script.sh")
 
@@ -125,4 +125,26 @@ def test_upload_security_validations():
     # 3. Unrecognizable headers rejected
     with pytest.raises(ValueError, match="Could not identify recognizable retail transaction columns"):
         process_csv_content(b"col_a,col_b,col_c\n1,2,3\n", "unrecognized.csv")
+
+
+def test_upload_excel_dataset():
+    """Verifies dynamic ingestion of Excel (.xlsx) files."""
+    df = pd.DataFrame({
+        "Date": ["2026-02-01", "2026-02-02"],
+        "Product Name": ["Organic Milk", "Sourdough Bread"],
+        "Category": ["Dairy", "Bakery"],
+        "Quantity": [2, 1],
+        "Price": [4.50, 6.00],
+        "Total": [9.00, 6.00],
+    })
+    excel_buffer = io.BytesIO()
+    df.to_excel(excel_buffer, index=False, engine="openpyxl")
+    excel_bytes = excel_buffer.getvalue()
+
+    result = process_csv_content(excel_bytes, "grocery_inventory.xlsx")
+    assert result["summary"]["clean_rows"] == 2
+    assert result["summary"]["financials"]["total_revenue"] == 15.00
+    assert len(result["records"]) == 2
+    assert result["records"][0]["product_name"] == "Organic Milk"
+
 

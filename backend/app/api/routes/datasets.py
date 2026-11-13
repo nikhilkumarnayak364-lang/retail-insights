@@ -19,12 +19,12 @@ router = APIRouter(prefix="/datasets", tags=["Dataset Management & Ingestion"])
     "/upload",
     response_model=DatasetUploadResponse,
     status_code=status.HTTP_201_CREATED,
-    summary="Upload & Ingest Retail CSV Dataset",
-    description="Accepts a retail CSV file, automatically normalizes columns, validates schemas, calculates metrics, and stores the records.",
+    summary="Upload & Ingest Retail CSV or Excel Dataset",
+    description="Accepts a retail CSV or Excel (.xlsx, .xls) file, automatically normalizes columns, validates schemas, calculates metrics, and stores the records.",
     dependencies=[Depends(verify_admin_access)],
 )
 async def upload_dataset(
-    file: UploadFile = File(..., description="Retail sales CSV file"),
+    file: UploadFile = File(..., description="Retail sales CSV or Excel (.xlsx, .xls) file"),
 ) -> DatasetUploadResponse:
     """Uploads a CSV file, parses via Pandas, and stores in database."""
     content = await file.read()

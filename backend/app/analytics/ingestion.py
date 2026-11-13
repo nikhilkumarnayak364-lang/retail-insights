@@ -179,19 +179,23 @@ MAX_CSV_COLUMN_COUNT = 100  # 100 column safety cap
 
 
 def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optional[str] = None) -> Dict[str, Any]:
-    """Ingests raw CSV bytes, validates security boundaries, normalizes schemas,
+    """Ingests raw CSV or Excel bytes, validates security boundaries, normalizes schemas,
     coerces types, detects business domain, distinguishes actual vs estimated profit,
     and returns standardized transaction records and analytical summary statistics.
     """
-    # 1. Validation: File extension check
+    # 1. Validation: File extension check (CSV and Excel supported)
     clean_fn = filename.strip().lower()
-    if not clean_fn.endswith(".csv"):
-        raise ValueError(f"Invalid file extension for '{filename}'. Only .csv files are supported.")
+    is_excel = clean_fn.endswith(".xlsx") or clean_fn.endswith(".xls")
+    is_csv = clean_fn.endswith(".csv")
+    if not (is_csv or is_excel):
+        raise ValueError(
+            f"Invalid file extension for '{filename}'. Only CSV (.csv) and Excel (.xlsx, .xls) files are supported."
+        )
 
     # 2. Validation: Server-side file size limit
     file_size_bytes = len(csv_bytes)
     if file_size_bytes == 0:
-        raise ValueError(f"The uploaded CSV file '{filename}' is empty (0 bytes).")
+        raise ValueError(f"The uploaded file '{filename}' is empty (0 bytes).")
     if file_size_bytes > MAX_CSV_FILE_SIZE_BYTES:
         mb_size = round(file_size_bytes / (1024 * 1024), 2)
         raise ValueError(
@@ -199,14 +203,17 @@ def process_csv_content(csv_bytes: bytes, filename: str, retail_type_hint: Optio
             "Please compress or upload a dataset under 25MB."
         )
 
-    # 3. Validation & Parsing: Robust encoding and delimiter parsing
+    # 3. Validation & Parsing: Robust CSV / Excel parsing
     try:
-        try:
-            df = pd.read_csv(io.BytesIO(csv_bytes), encoding="utf-8")
-        except UnicodeDecodeError:
-            df = pd.read_csv(io.BytesIO(csv_bytes), encoding="latin-1")
+        if is_excel:
+            df = pd.read_excel(io.BytesIO(csv_bytes))
+        else:
+            try:
+                df = pd.read_csv(io.BytesIO(csv_bytes), encoding="utf-8")
+            except UnicodeDecodeError:
+                df = pd.read_csv(io.BytesIO(csv_bytes), encoding="latin-1")
     except Exception as exc:
-        raise ValueError(f"Could not parse CSV file '{filename}'. Malformed format: {str(exc)}")
+        raise ValueError(f"Could not parse file '{filename}'. Malformed format: {str(exc)}")
 
     # 4. Validation: Column limits & duplicate header sanitization
     if df.shape[1] == 0:
