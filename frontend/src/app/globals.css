@@ -7,11 +7,50 @@
   --background-rgb: 248, 250, 252;
 }
 
+/* Prevent horizontal overflow on mobile */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-rgb));
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   min-height: 100vh;
+}
+
+/* Mobile-safe table wrapper */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent text overflow in tight spaces */
+.text-safe {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Custom scrollbars for SaaS dashboards */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
 }
 
 /* Custom scrollbars for SaaS dashboards */

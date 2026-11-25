@@ -67,10 +67,13 @@ export const HealthStatusBanner: React.FC<HealthStatusBannerProps> = ({
               </div>
             )}
             <div className="mt-3 flex items-center gap-2 text-xs text-rose-800">
-              <Terminal className="w-3.5 h-3.5" />
+              <Terminal className="w-3.5 h-3.5 shrink-0" />
               <span>
-                Start the analytics service from your project directory, then click{" "}
-                <strong>Retry</strong>.
+                {typeof window !== "undefined" &&
+                window.location.hostname !== "localhost" &&
+                window.location.hostname !== "127.0.0.1"
+                  ? "Cloud hosting (e.g. Render free tier) takes 30-50s to wake from cold sleep. Please wait a moment and click Retry Connection."
+                  : "Start the analytics service from your project directory, then click Retry."}
               </span>
             </div>
           </div>

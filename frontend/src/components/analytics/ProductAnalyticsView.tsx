@@ -295,7 +295,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
             <BarChart
               data={activeTopProducts}
               layout="vertical"
-              margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
+              margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
               <XAxis
@@ -308,10 +308,10 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
               <YAxis
                 type="category"
                 dataKey="product_name"
-                tick={{ fontSize: 11, fill: "#334155" }}
+                tick={{ fontSize: 10, fill: "#334155" }}
                 tickLine={false}
                 axisLine={false}
-                width={140}
+                width={110}
               />
               <Tooltip
                 content={({ active, payload }) => {

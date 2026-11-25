@@ -171,7 +171,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
         </div>
 
-        <div className="bg-slate-900 text-slate-200 rounded-xl p-4 font-mono text-xs space-y-2">
+        <div className="bg-slate-900 text-slate-200 rounded-xl p-4 font-mono text-xs space-y-2 overflow-x-auto">
           <div className="flex items-center justify-between text-[11px] text-slate-400">
             <span>MongoDB Atlas Connection Config (backend/.env)</span>
             <button
@@ -182,9 +182,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               {copiedEnv ? "Copied!" : "Copy Template"}
             </button>
           </div>
-          <p className="text-emerald-400">MONGODB_URI=mongodb+srv://&lt;user&gt;:&lt;password&gt;@cluster0.mongodb.net/?retryWrites=true&amp;w=majority</p>
-          <p className="text-slate-300">MONGODB_DATABASE=retail_insights</p>
-          <p className="text-slate-300">FRONTEND_ORIGIN=http://localhost:3000</p>
+          <p className="text-emerald-400 whitespace-nowrap">MONGODB_URI=mongodb+srv://&lt;user&gt;:&lt;password&gt;@cluster0.mongodb.net/?retryWrites=true&amp;w=majority</p>
+          <p className="text-slate-300 whitespace-nowrap">MONGODB_DATABASE=retail_insights</p>
+          <p className="text-slate-300 whitespace-nowrap">FRONTEND_ORIGIN=http://localhost:3000</p>
         </div>
       </div>
 

@@ -262,7 +262,7 @@ export const SalesAnalyticsView: React.FC<SalesAnalyticsViewProps> = ({
               Computed chronologically from transaction timestamps
             </p>
           </div>
-          <div className="flex items-center gap-4 text-xs font-medium">
+          <div className="flex items-center gap-3 sm:gap-4 text-xs font-medium flex-wrap">
             <span className="flex items-center gap-1.5 text-indigo-600">
               <span className="w-3 h-3 rounded-full bg-indigo-600 inline-block" /> Invoiced Revenue
             </span>

@@ -189,12 +189,12 @@ export const BusinessInsightsView: React.FC<BusinessInsightsViewProps> = ({
       </div>
 
       {/* Business Health Score Hero Card */}
-      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-md">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-5 sm:p-8 shadow-md">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start lg:items-center">
           {/* Left: Overall Health Score */}
-          <div className="flex items-center gap-6 border-b lg:border-b-0 lg:border-r border-indigo-800/60 pb-6 lg:pb-0 lg:pr-8">
+          <div className="flex items-center gap-5 border-b lg:border-b-0 lg:border-r border-indigo-800/60 pb-5 lg:pb-0 lg:pr-8">
             <div className="relative flex items-center justify-center shrink-0">
-              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-indigo-400/30 flex flex-col items-center justify-center bg-indigo-950/80 shadow-inner">
+              <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full border-4 border-indigo-400/30 flex flex-col items-center justify-center bg-indigo-950/80 shadow-inner">
                 <span className="text-3xl sm:text-4xl font-black tracking-tight text-white">
                   {health_score.overall_score}
                 </span>
@@ -207,8 +207,8 @@ export const BusinessInsightsView: React.FC<BusinessInsightsViewProps> = ({
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-200 border border-indigo-400/40 mb-1.5">
                 <span>Grade {health_score.grade}</span>
               </div>
-              <h3 className="text-lg font-bold text-white tracking-tight">Retail Health Index</h3>
-              <p className="text-xs text-slate-300 mt-1 leading-relaxed max-w-sm">
+              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">Retail Health Index</h3>
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
                 {health_score.status_summary}
               </p>
             </div>
@@ -255,7 +255,7 @@ export const BusinessInsightsView: React.FC<BusinessInsightsViewProps> = ({
               <ul className="space-y-1">
                 {health_score.key_strengths.map((str, idx) => (
                   <li key={idx} className="text-xs text-slate-300 flex items-start gap-1.5">
-                    <span className="text-emerald-400 font-bold">•</span>
+                    <span className="text-emerald-400 font-bold shrink-0">•</span>
                     <span>{str}</span>
                   </li>
                 ))}
@@ -270,7 +270,7 @@ export const BusinessInsightsView: React.FC<BusinessInsightsViewProps> = ({
               <ul className="space-y-1">
                 {health_score.urgent_priorities.map((pri, idx) => (
                   <li key={idx} className="text-xs text-slate-300 flex items-start gap-1.5">
-                    <span className="text-amber-400 font-bold">•</span>
+                    <span className="text-amber-400 font-bold shrink-0">•</span>
                     <span>{pri}</span>
                   </li>
                 ))}
@@ -344,9 +344,9 @@ export const BusinessInsightsView: React.FC<BusinessInsightsViewProps> = ({
       </div>
 
       {/* Filters Toolbar */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-sm flex flex-col gap-3">
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wider mr-2">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wider mr-1">
             <Filter className="w-3.5 h-3.5" />
             <span>Severity:</span>
           </div>
@@ -367,7 +367,7 @@ export const BusinessInsightsView: React.FC<BusinessInsightsViewProps> = ({
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wider mr-2">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wider mr-1">
             <span>Category:</span>
           </div>
           {["all", "pricing", "inventory", "customer", "operations", "checkout"].map((cat) => (

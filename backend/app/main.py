@@ -44,12 +44,13 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Configure CORS Middleware with explicit origins allowlist (no arbitrary wildcard subdomains)
+# Configure CORS Middleware with explicit origins allowlist and Vercel regex pattern
 is_wildcard = "*" in settings.cors_origins
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins if not is_wildcard else ["*"],
+    allow_origin_regex=settings.CORS_ORIGIN_REGEX if not is_wildcard else None,
     allow_credentials=True if not is_wildcard else False,
     allow_methods=["*"],
     allow_headers=["*"],

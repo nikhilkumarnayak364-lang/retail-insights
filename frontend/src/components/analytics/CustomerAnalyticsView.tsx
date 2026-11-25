@@ -332,30 +332,32 @@ export const CustomerAnalyticsView: React.FC<CustomerAnalyticsViewProps> = ({
           {demographics.gender.length > 0 && (
             <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
               <h3 className="text-sm font-bold text-slate-900 mb-4">Gender Demographics</h3>
-              <div className="flex items-center gap-6">
-                <ResponsiveContainer width="50%" height={180}>
-                  <PieChart>
-                    <Pie
-                      data={demographics.gender}
-                      dataKey="revenue"
-                      nameKey="gender"
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={50}
-                      outerRadius={80}
-                      paddingAngle={3}
-                    >
-                      {demographics.gender.map((g, i) => (
-                        <Cell key={g.gender} fill={GENDER_COLORS[i % GENDER_COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      formatter={(val: number) => [fmt$(val), "Revenue"]}
-                      contentStyle={{ fontSize: 11, borderRadius: 8 }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-                <div className="flex-1 space-y-2">
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                <div className="w-full sm:w-1/2 h-44">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={demographics.gender}
+                        dataKey="revenue"
+                        nameKey="gender"
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={80}
+                        paddingAngle={3}
+                      >
+                        {demographics.gender.map((g, i) => (
+                          <Cell key={g.gender} fill={GENDER_COLORS[i % GENDER_COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        formatter={(val: number) => [fmt$(val), "Revenue"]}
+                        contentStyle={{ fontSize: 11, borderRadius: 8 }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="flex-1 w-full space-y-2">
                   {demographics.gender.map((g, i) => (
                     <div key={g.gender} className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">

@@ -260,17 +260,17 @@ export default function DashboardPage() {
 
               {/* Active Dataset Ingestion Bar / Callout */}
               {activeDataset && activeStats ? (
-                <div className="bg-emerald-50/70 border border-emerald-200/90 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="bg-emerald-50/70 border border-emerald-200/90 rounded-2xl p-4 sm:p-5 shadow-sm flex flex-col gap-4">
                   <div className="flex items-start gap-3">
                     <div className="p-2.5 bg-emerald-100 rounded-xl text-emerald-700 shrink-0">
                       <FileSpreadsheet className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-xs font-bold text-emerald-900">
                           Active Dataset:
                         </span>
-                        <span className="text-xs font-bold font-mono text-emerald-950 bg-emerald-100/80 px-2 py-0.5 rounded border border-emerald-300">
+                        <span className="text-xs font-bold font-mono text-emerald-950 bg-emerald-100/80 px-2 py-0.5 rounded border border-emerald-300 truncate max-w-[180px] sm:max-w-none">
                           {activeDataset.filename}
                         </span>
                         <span className="text-[11px] font-semibold uppercase px-2 py-0.5 rounded bg-white text-emerald-800 border border-emerald-200">
@@ -281,76 +281,76 @@ export default function DashboardPage() {
                         </span>
                       </div>
                       <p className="text-xs text-emerald-800 mt-1">
-                        Live analytics synchronized from this dataset. Operating span:{" "}
+                        Live analytics synchronized. Span:{" "}
                         <span className="font-semibold font-mono">{activeStats.date_range.start}</span> to{" "}
                         <span className="font-semibold font-mono">{activeStats.date_range.end}</span>.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0 flex-wrap">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <button
                       type="button"
                       onClick={() => setCurrentView("sales")}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
                     >
                       <TrendingUp className="w-3.5 h-3.5" />
-                      <span>Sales Analysis</span>
+                      <span>Sales</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setCurrentView("product")}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
                     >
                       <Package className="w-3.5 h-3.5" />
-                      <span>Product Analysis</span>
+                      <span>Products</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setCurrentView("customer")}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-teal-600 hover:bg-teal-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-teal-600 hover:bg-teal-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
                     >
                       <Users className="w-3.5 h-3.5" />
-                      <span>Customer Analysis</span>
+                      <span>Customers</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setCurrentView("geographic")}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-cyan-600 hover:bg-cyan-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-cyan-600 hover:bg-cyan-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
                     >
                       <MapPin className="w-3.5 h-3.5" />
-                      <span>Geographic Analysis</span>
+                      <span>Geographic</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setCurrentView("category")}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
                     >
                       <FolderTree className="w-3.5 h-3.5" />
-                      <span>Category Analysis</span>
+                      <span>Categories</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setCurrentView("payment")}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-amber-600 hover:bg-amber-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-amber-600 hover:bg-amber-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
                     >
                       <CreditCard className="w-3.5 h-3.5" />
-                      <span>Payment Analysis</span>
+                      <span>Payments</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setCurrentView("insights")}
-                      className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>Business Insights</span>
+                      <span>Insights</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setCurrentView("explorer")}
                       className="px-3 py-2 rounded-xl text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-colors"
                     >
-                      Data Explorer
+                      Explorer
                     </button>
                   </div>
                 </div>

@@ -176,9 +176,9 @@ export const PaymentAnalyticsView: React.FC<PaymentAnalyticsViewProps> = ({
             Tender share · Digital vs Cash adoption · Interchange processing fee estimates
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-xl text-xs font-semibold text-indigo-700">
-          <span className="font-mono">{activeDataset.filename}</span>
-          <span className="px-1.5 py-0.5 bg-white rounded border border-indigo-200 uppercase text-[10px]">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-xl text-xs font-semibold text-indigo-700 max-w-full overflow-hidden">
+          <span className="font-mono truncate max-w-[140px] sm:max-w-none">{activeDataset.filename}</span>
+          <span className="px-1.5 py-0.5 bg-white rounded border border-indigo-200 uppercase text-[10px] shrink-0">
             {activeDataset.retail_type.replace("_", " ")}
           </span>
         </div>
@@ -270,7 +270,7 @@ export const PaymentAnalyticsView: React.FC<PaymentAnalyticsViewProps> = ({
         <div className="flex items-center gap-2 mb-4">
           <ShieldCheck className="w-4 h-4 text-indigo-500" />
           <h3 className="text-sm font-bold text-slate-900">Payment Method Performance & Fee Matrix</h3>
-          <span className="ml-auto text-xs text-slate-400">
+          <span className="hidden sm:inline ml-auto text-xs text-slate-400">
             Fee estimates modeled on card brand interchange rates
           </span>
         </div>

@@ -189,9 +189,9 @@ export const CategoryAnalyticsView: React.FC<CategoryAnalyticsViewProps> = ({
             Department revenue share · Subcategory depth · SKU counts · Margins
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-xl text-xs font-semibold text-indigo-700">
-          <span className="font-mono">{activeDataset.filename}</span>
-          <span className="px-1.5 py-0.5 bg-white rounded border border-indigo-200 uppercase text-[10px]">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-xl text-xs font-semibold text-indigo-700 max-w-full overflow-hidden">
+          <span className="font-mono truncate max-w-[140px] sm:max-w-none">{activeDataset.filename}</span>
+          <span className="px-1.5 py-0.5 bg-white rounded border border-indigo-200 uppercase text-[10px] shrink-0">
             {activeDataset.retail_type.replace("_", " ")}
           </span>
         </div>
@@ -260,28 +260,30 @@ export const CategoryAnalyticsView: React.FC<CategoryAnalyticsViewProps> = ({
             <h3 className="text-sm font-bold text-slate-900">Category Revenue Contribution</h3>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-6">
-            <ResponsiveContainer width="100%" height={260} className="sm:w-1/2">
-              <PieChart>
-                <Pie
-                  data={categories}
-                  dataKey="revenue"
-                  nameKey="category"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={55}
-                  outerRadius={95}
-                  paddingAngle={3}
-                >
-                  {categories.map((c, i) => (
-                    <Cell key={c.category} fill={CATEGORY_COLORS[i % CATEGORY_COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(val: number) => [fmt$(val), "Revenue"]}
-                  contentStyle={{ fontSize: 12, borderRadius: 8 }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
+            <div className="w-full sm:w-1/2 h-[260px] shrink-0">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={categories}
+                    dataKey="revenue"
+                    nameKey="category"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={55}
+                    outerRadius={95}
+                    paddingAngle={3}
+                  >
+                    {categories.map((c, i) => (
+                      <Cell key={c.category} fill={CATEGORY_COLORS[i % CATEGORY_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(val: number) => [fmt$(val), "Revenue"]}
+                    contentStyle={{ fontSize: 12, borderRadius: 8 }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
             <div className="flex-1 w-full space-y-2 max-h-60 overflow-y-auto pr-2">
               {categories.map((cat, i) => (
                 <div key={cat.category} className="flex items-center justify-between text-xs">
@@ -308,7 +310,7 @@ export const CategoryAnalyticsView: React.FC<CategoryAnalyticsViewProps> = ({
         <div className="flex items-center gap-2 mb-4">
           <Tag className="w-4 h-4 text-indigo-500" />
           <h3 className="text-sm font-bold text-slate-900">Category Taxonomy & Subcategory Breakdown</h3>
-          <span className="ml-auto text-xs text-slate-400">Click a category row to expand subcategories</span>
+          <span className="hidden sm:inline ml-auto text-xs text-slate-400">Click a category row to expand subcategories</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">

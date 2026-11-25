@@ -93,7 +93,7 @@ export const CurrencyConverterModal: React.FC = () => {
             </div>
 
             {/* From & To Selectors */}
-            <div className="grid grid-cols-[1fr,auto,1fr] items-center gap-2">
+            <div className="flex flex-col sm:grid sm:grid-cols-[1fr,auto,1fr] sm:items-center gap-2">
               <div>
                 <label className="text-[11px] font-semibold text-slate-500 block mb-1">
                   From Currency
@@ -111,14 +111,14 @@ export const CurrencyConverterModal: React.FC = () => {
                 </select>
               </div>
 
-              <div className="pt-5">
+              <div className="sm:pt-5 flex justify-center">
                 <button
                   type="button"
                   onClick={swapCurrencies}
                   className="p-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors shadow-sm"
                   title="Swap currencies"
                 >
-                  <ArrowRightLeft className="w-4 h-4" />
+                  <ArrowRightLeft className="w-4 h-4 sm:rotate-0 rotate-90" />
                 </button>
               </div>
 

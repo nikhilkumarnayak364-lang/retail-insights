@@ -237,9 +237,9 @@ export const GeographicAnalyticsView: React.FC<GeographicAnalyticsViewProps> = (
             Regional revenue · Store benchmarking · City rankings
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-xl text-xs font-semibold text-indigo-700">
-          <span className="font-mono">{activeDataset.filename}</span>
-          <span className="px-1.5 py-0.5 bg-white rounded border border-indigo-200 uppercase text-[10px]">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-xl text-xs font-semibold text-indigo-700 max-w-full overflow-hidden">
+          <span className="font-mono truncate max-w-[140px] sm:max-w-none">{activeDataset.filename}</span>
+          <span className="px-1.5 py-0.5 bg-white rounded border border-indigo-200 uppercase text-[10px] shrink-0">
             {activeDataset.retail_type.replace("_", " ")}
           </span>
         </div>
@@ -385,10 +385,12 @@ export const GeographicAnalyticsView: React.FC<GeographicAnalyticsViewProps> = (
       {/* Store Benchmarking Table */}
       {stores.length > 0 && (
         <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="w-4 h-4 text-indigo-500" />
-            <h3 className="text-sm font-bold text-slate-900">Store Benchmarking</h3>
-            <span className="ml-auto text-xs text-slate-400">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-4">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-indigo-500 shrink-0" />
+              <h3 className="text-sm font-bold text-slate-900">Store Benchmarking</h3>
+            </div>
+            <span className="hidden sm:inline sm:ml-auto text-xs text-slate-400">
               Performance Index: 100 = fleet average · &gt;110 outperforming · &lt;90 underperforming
             </span>
           </div>

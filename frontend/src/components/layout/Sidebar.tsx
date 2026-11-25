@@ -15,6 +15,7 @@ import {
   Settings,
   Store,
   Layers,
+  X,
 } from "lucide-react";
 
 export type NavView = "overview" | "upload" | "explorer" | "sales" | "product" | "customer" | "category" | "geographic" | "payment" | "insights" | "settings";
@@ -51,7 +52,8 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({
   currentView,
   onSelectView,
-  isOpen = true,
+  isOpen = false,
+  onClose,
 }) => {
   return (
     <aside
@@ -60,13 +62,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       }`}
     >
       {/* Brand Header */}
-      <div className="h-16 flex items-center px-6 border-b border-slate-800/80 bg-slate-950/50">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/30">
+      <div className="h-16 flex items-center px-4 sm:px-6 border-b border-slate-800/80 bg-slate-950/50 shrink-0">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <div className="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/30 shrink-0">
             <Store className="w-5 h-5" />
           </div>
-          <div>
-            <h1 className="font-semibold text-white tracking-tight text-base flex items-center gap-1.5">
+          <div className="min-w-0">
+            <h1 className="font-semibold text-white tracking-tight text-base flex items-center gap-1.5 truncate">
               Retail Insights
             </h1>
             <span className="text-[10px] font-medium uppercase tracking-wider text-indigo-400 bg-indigo-950/60 px-1.5 py-0.5 rounded border border-indigo-800/50">
@@ -74,6 +76,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </span>
           </div>
         </div>
+        {/* Mobile close button */}
+        <button
+          type="button"
+          onClick={onClose}
+          className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors ml-2 shrink-0"
+          aria-label="Close navigation menu"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Navigation Links */}

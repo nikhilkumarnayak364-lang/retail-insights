@@ -159,7 +159,7 @@ export const DataExplorerView: React.FC<DataExplorerViewProps> = ({
                   setSelectedDatasetId(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="text-sm font-semibold text-slate-900 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="text-sm font-semibold text-slate-900 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 max-w-full"
               >
                 {datasets.map((ds) => (
                   <option key={ds.dataset_id} value={ds.dataset_id}>
@@ -252,7 +252,7 @@ export const DataExplorerView: React.FC<DataExplorerViewProps> = ({
 
       {/* Dataset KPI Summary Cards (Live from Python) */}
       {stats && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
             <div className="flex items-center justify-between text-slate-500 text-xs">
               <span>Gross Sales Volume</span>

@@ -44,55 +44,55 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
   }, []);
 
   return (
-    <header className="h-16 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-30 px-4 sm:px-6 flex items-center justify-between">
+    <header className="h-16 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-30 px-3 sm:px-6 flex items-center justify-between gap-2">
       {/* Left side: Hamburger (mobile) + Page Title & Active Dataset Indicator */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 min-w-0">
         <button
           type="button"
           onClick={onMenuToggle}
-          className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 lg:hidden focus:outline-none"
+          className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 lg:hidden focus:outline-none shrink-0"
           aria-label="Toggle Navigation Menu"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm font-semibold text-slate-800">
+        <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
+          <span className="text-sm font-semibold text-slate-800 whitespace-nowrap">
             System Workspace
           </span>
-          <span className="text-slate-400">/</span>
-          <span className="text-sm text-slate-500 font-medium">
-            Retail Analytics Platform
+          <span className="text-slate-400 hidden sm:inline">/</span>
+          <span className="text-sm text-slate-500 font-medium whitespace-nowrap hidden sm:inline">
+            Retail Analytics
           </span>
 
           {activeDataset && (
-            <div className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200 ml-2">
-              <Database className="w-3 h-3 text-indigo-600" />
-              <span className="font-semibold truncate max-w-[150px]">{activeDataset.filename}</span>
-              <span className="text-[10px] text-indigo-500">({activeDataset.row_count} rows)</span>
+            <div className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200 ml-1">
+              <Database className="w-3 h-3 text-indigo-600 shrink-0" />
+              <span className="font-semibold truncate max-w-[120px]">{activeDataset.filename}</span>
+              <span className="text-[10px] text-indigo-500 whitespace-nowrap">({activeDataset.row_count} rows)</span>
             </div>
           )}
         </div>
       </div>
 
       {/* Right side: Currency Selector, Calculator, System Status Indicator & Refresh */}
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
         {/* Currency Selector Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs transition-colors shadow-sm"
+            className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs transition-colors shadow-sm"
             title="Switch platform currency"
           >
             <span className="text-sm">{activeInfo.flag}</span>
             <span className="font-mono text-indigo-700 font-bold">{activeInfo.symbol}</span>
-            <span className="font-mono">{activeInfo.code}</span>
-            <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+            <span className="font-mono hidden sm:inline">{activeInfo.code}</span>
+            <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-1.5 w-60 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+            <div className="absolute right-0 mt-1.5 w-56 sm:w-60 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
               <div className="px-3 py-1.5 border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                 Select Platform Currency
               </div>
@@ -155,7 +155,7 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
         <button
           type="button"
           onClick={openCalculator}
-          className="p-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition-colors"
+          className="p-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition-colors hidden sm:flex"
           title="Open Currency Converter Calculator"
         >
           <Calculator className="w-4 h-4" />
@@ -166,7 +166,7 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
 
         {/* System Status Pill */}
         <div
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+          className={`flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
             status === "connected"
               ? "bg-slate-50 text-slate-700 border-slate-200"
               : status === "checking"
@@ -177,21 +177,21 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
           {status === "connected" && (
             <>
               <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-              <span>System Online</span>
+              <span className="hidden sm:inline whitespace-nowrap">System Online</span>
             </>
           )}
 
           {status === "checking" && (
             <>
               <Activity className="w-3.5 h-3.5 text-amber-600 animate-spin shrink-0" />
-              <span>Checking...</span>
+              <span className="hidden sm:inline">Checking...</span>
             </>
           )}
 
           {status === "disconnected" && (
             <>
               <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
-              <span>System Offline</span>
+              <span className="hidden sm:inline whitespace-nowrap">Offline</span>
             </>
           )}
         </div>

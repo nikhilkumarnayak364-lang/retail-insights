@@ -46,6 +46,7 @@ export function useBackendHealth() {
         errorMessage: message,
         lastChecked: new Date().toLocaleTimeString(),
         latencyMs: null,
+        apiUrl: apiService.getBaseUrl(),
       }));
     }
   }, []);

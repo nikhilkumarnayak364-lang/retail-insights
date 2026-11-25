@@ -24,12 +24,28 @@ import {
   ConvertResponse,
 } from "@/types/api";
 
-const getApiBaseUrl = (): string => {
-  const envUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
-  if (envUrl && envUrl !== "http://localhost:8000") {
-    return envUrl.replace(/\/+$/, "");
+const formatApiUrl = (url: string): string => {
+  let cleaned = url.trim().replace(/\/+$/, "");
+  if (!/^https?:\/\//i.test(cleaned)) {
+    cleaned = `https://${cleaned}`;
   }
-  // When running in browser on any non-localhost host (like Vercel), use live Render backend
+  return cleaned;
+};
+
+const getApiBaseUrl = (): string => {
+  const rawEnv = process.env.NEXT_PUBLIC_API_URL?.trim();
+
+  // If a valid non-localhost URL is provided via environment variable, format and use it
+  if (
+    rawEnv &&
+    rawEnv !== "http://localhost:8000" &&
+    rawEnv !== "http://127.0.0.1:8000"
+  ) {
+    return formatApiUrl(rawEnv);
+  }
+
+  // When loaded in browser on any public domain (such as Vercel, custom domain, or mobile),
+  // default to the live production cloud backend
   if (
     typeof window !== "undefined" &&
     window.location.hostname !== "localhost" &&
@@ -37,18 +53,24 @@ const getApiBaseUrl = (): string => {
   ) {
     return "https://retail-insights-backend.onrender.com";
   }
-  return envUrl ? envUrl.replace(/\/+$/, "") : "http://localhost:8000";
+
+  // Development fallback for local PC execution
+  return rawEnv ? formatApiUrl(rawEnv) : "http://localhost:8000";
 };
 
 class ApiService {
   private baseUrl: string;
 
   constructor(baseUrl?: string) {
-    this.baseUrl = baseUrl || "";
+    this.baseUrl = baseUrl ? formatApiUrl(baseUrl) : "";
   }
 
   public getBaseUrl(): string {
-    if (this.baseUrl && this.baseUrl !== "http://localhost:8000") {
+    if (
+      this.baseUrl &&
+      this.baseUrl !== "http://localhost:8000" &&
+      this.baseUrl !== "http://127.0.0.1:8000"
+    ) {
       return this.baseUrl;
     }
     return getApiBaseUrl();
