@@ -33,26 +33,43 @@ import { apiService } from "@/services/api";
 import { useCurrency } from "@/context/CurrencyContext";
 
 // ─── Color Palettes ─────────────────────────────────────────────────────────
-const SEGMENT_COLORS: Record<string, string> = {
-  Champions: "#6366f1",
-  "Loyal Customers": "#10b981",
-  "Potential Loyalists": "#3b82f6",
-  "Recent Customers": "#8b5cf6",
-  "Promising": "#f59e0b",
-  "Need Attention": "#f97316",
-  "At Risk": "#ef4444",
-  "Cannot Lose Them": "#dc2626",
-  "Hibernating": "#94a3b8",
-  "Lost": "#64748b",
+const SEGMENT_PALETTE = [
+  "#6366f1", // Indigo (Champions)
+  "#10b981", // Emerald (Loyal Customers)
+  "#06b6d4", // Cyan (Potential Loyalists)
+  "#8b5cf6", // Purple (Recent Big Spenders)
+  "#3b82f6", // Blue (Recent / New Shoppers)
+  "#f59e0b", // Amber (Promising / Engaged)
+  "#f97316", // Orange (Need Attention)
+  "#ef4444", // Rose/Red (At Risk)
+  "#64748b", // Slate (Hibernating)
+  "#ec4899", // Pink (Special Cohort)
+];
+
+const segmentColor = (segment: string, index?: number): string => {
+  const s = (segment || "").toLowerCase();
+  if (s.includes("champion")) return "#6366f1"; // Indigo
+  if (s.includes("loyal")) return "#10b981"; // Emerald
+  if (s.includes("potential")) return "#06b6d4"; // Cyan
+  if (s.includes("big spend") || s.includes("big spender")) return "#8b5cf6"; // Purple
+  if (s.includes("new shopper") || s.includes("new") || s.includes("recent")) return "#3b82f6"; // Blue
+  if (s.includes("promis")) return "#f59e0b"; // Amber
+  if (s.includes("attention")) return "#f97316"; // Orange
+  if (s.includes("at risk") || s.includes("risk") || s.includes("lose")) return "#ef4444"; // Red
+  if (s.includes("hibernat")) return "#64748b"; // Slate
+  if (s.includes("lost")) return "#475569"; // Dark Slate
+
+  if (typeof index === "number") {
+    return SEGMENT_PALETTE[index % SEGMENT_PALETTE.length];
+  }
+  return "#6366f1";
 };
+
 const GENDER_COLORS = ["#6366f1", "#ec4899", "#10b981", "#f59e0b"];
 const AGE_COLORS = ["#6366f1", "#3b82f6", "#10b981", "#f59e0b", "#f97316", "#ec4899"];
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 const fmtPct = (n: number) => `${n.toFixed(1)}%`;
-
-const segmentColor = (segment: string) =>
-  SEGMENT_COLORS[segment] ?? "#94a3b8";
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
@@ -81,12 +98,16 @@ const SegmentTooltip = ({ active, payload }: { active?: boolean; payload?: Array
   const { formatCurrency } = useCurrency();
   if (!active || !payload?.length) return null;
   const d = payload[0].payload;
+  const color = segmentColor(d.segment);
   return (
-    <div className="bg-slate-900 text-white text-xs rounded-xl p-3 shadow-xl space-y-1">
-      <p className="font-semibold text-white">{d.segment}</p>
-      <p>Customers: <span className="font-bold">{d.customer_count.toLocaleString()}</span></p>
-      <p>Revenue Share: <span className="font-bold">{fmtPct(d.revenue_share_pct)}</span></p>
-      <p>Avg Spend: <span className="font-bold">{formatCurrency(d.avg_spend, { compact: true })}</span></p>
+    <div className="bg-slate-900 text-white text-xs rounded-xl p-3 shadow-xl space-y-1.5 border border-slate-800">
+      <div className="flex items-center gap-1.5 font-bold text-white">
+        <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
+        <span>{d.segment}</span>
+      </div>
+      <p className="text-slate-300">Customers: <span className="font-bold text-white">{d.customer_count.toLocaleString()}</span></p>
+      <p className="text-emerald-300">Revenue Share: <span className="font-bold">{fmtPct(d.revenue_share_pct)}</span></p>
+      <p className="text-amber-300">Avg Spend: <span className="font-bold">{formatCurrency(d.avg_spend, { compact: true })}</span></p>
     </div>
   );
 };
@@ -268,8 +289,8 @@ export const CustomerAnalyticsView: React.FC<CustomerAnalyticsViewProps> = ({
               />
               <Tooltip content={<SegmentTooltip />} />
               <Bar dataKey="customer_count" radius={[0, 4, 4, 0]} maxBarSize={22}>
-                {rfm_segments.map((seg) => (
-                  <Cell key={seg.segment} fill={segmentColor(seg.segment)} />
+                {rfm_segments.map((seg, idx) => (
+                  <Cell key={seg.segment} fill={segmentColor(seg.segment, idx)} />
                 ))}
               </Bar>
             </BarChart>
@@ -294,13 +315,13 @@ export const CustomerAnalyticsView: React.FC<CustomerAnalyticsViewProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {rfm_segments.map((seg) => (
+                {rfm_segments.map((seg, idx) => (
                   <tr key={seg.segment} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
                     <td className="py-2 pr-2">
                       <div className="flex items-center gap-2">
                         <span
-                          className="w-2 h-2 rounded-full shrink-0"
-                          style={{ backgroundColor: segmentColor(seg.segment) }}
+                          className="w-2.5 h-2.5 rounded-full shrink-0"
+                          style={{ backgroundColor: segmentColor(seg.segment, idx) }}
                         />
                         <span className="font-medium text-slate-800">{seg.segment}</span>
                       </div>
