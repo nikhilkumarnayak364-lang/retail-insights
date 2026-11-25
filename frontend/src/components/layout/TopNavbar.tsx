@@ -75,8 +75,20 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
         </div>
       </div>
 
-      {/* Right side: Currency Selector, Calculator, System Status Indicator & Refresh */}
+      {/* Right side: Author Signature, Currency Selector, Calculator, System Status Indicator & Refresh */}
       <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Author Credit Badge */}
+        <a
+          href="https://github.com/nikhilkumarnayak364-lang"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50/80 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold border border-indigo-200/80 transition-colors shadow-sm"
+          title="Engineered by Nikhil Kumar Nayak"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-indigo-600" />
+          <span>By Nikhil Kumar Nayak</span>
+        </a>
+
         {/* Currency Selector Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button

@@ -24,74 +24,50 @@ interface AnalyticsModule {
 
 const ANALYTICS_MODULES: AnalyticsModule[] = [
   {
-    title: "Sales Analytics",
+    title: "Sales & Revenue Analytics",
     category: "Revenue & Volume",
     description:
-      "Time-series revenue trends, seasonal cycles, hourly traffic patterns, and growth velocity.",
+      "Time-series revenue trajectories, seasonal cycles, hourly traffic patterns, and growth velocity.",
     icon: TrendingUp,
     view: "sales",
   },
   {
-    title: "Product Performance",
+    title: "Products & Inventory",
     category: "Merchandise Intelligence",
     description:
-      "Top-selling items, slow movers, stock turnover rates, and gross margin contribution.",
+      "Top-selling items, slow movers, margin economics, price sensitivity tiers, and dead stock risk alerts.",
     icon: Package,
     view: "product",
   },
   {
-    title: "Customer Insights",
-    category: "Behaviour & Retention",
+    title: "Customers & Retention",
+    category: "Behaviour & Cohorts",
     description:
-      "RFM segmentation, customer lifetime value, retention cohorts, and purchase intervals.",
+      "RFM behavioral segmentation (Champions, Loyalists, At Risk), customer lifetime value (CLV), and retention rates.",
     icon: Users,
     view: "customer",
-  },
-  {
-    title: "Category Analysis",
-    category: "Catalog Taxonomy",
-    description:
-      "Department contribution, basket mix affinities, and cross-category performance.",
-    icon: FolderTree,
-    view: "category",
-  },
-  {
-    title: "Geographic Analysis",
-    category: "Location Intelligence",
-    description:
-      "Regional sales distribution, store-by-store benchmarking, and density mapping.",
-    icon: MapPin,
-    view: "geographic",
-  },
-  {
-    title: "Payment Analytics",
-    category: "Checkout Economics",
-    description:
-      "Tender type share, digital wallet adoption, refund volumes, and transaction trends.",
-    icon: CreditCard,
-    view: "payment",
   },
   {
     title: "Business Insights",
     category: "Automated Recommendations",
     description:
-      "Anomaly detection, margin leak alerts, and prescriptive retail recommendations.",
+      "100-point Retail Health Score, margin leakage alerts, stagnant stock capital recovery, and prescriptive actions.",
     icon: Sparkles,
     view: "insights",
   },
   {
-    title: "Dataset Upload",
-    category: "Data Ingestion",
+    title: "Dataset Ingestion & Upload",
+    category: "Data Management",
     description:
-      "Drag-and-drop CSV uploads with automated schema detection and column validation.",
+      "Upload retail CSV files or launch 1-click sample datasets (Clothing, Supermarket, Electronics).",
     icon: UploadCloud,
     view: "upload",
   },
   {
-    title: "Data Explorer",
-    category: "Dataset Management",
+    title: "Data Explorer & Records",
+    category: "Normalized Transactions",
     description:
-      "Browse loaded datasets, preview records, manage active datasets, and export data.",
+      "Search, filter, paginate, inspect schema mappings, and manage active ingested datasets.",
     icon: Database,
     view: "explorer",
   },

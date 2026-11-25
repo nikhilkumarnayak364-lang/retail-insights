@@ -53,18 +53,6 @@ const CustomerAnalyticsView = dynamic(
   () => import("@/components/analytics/CustomerAnalyticsView").then((m) => m.CustomerAnalyticsView),
   { loading: LoadingView }
 );
-const GeographicAnalyticsView = dynamic(
-  () => import("@/components/analytics/GeographicAnalyticsView").then((m) => m.GeographicAnalyticsView),
-  { loading: LoadingView }
-);
-const CategoryAnalyticsView = dynamic(
-  () => import("@/components/analytics/CategoryAnalyticsView").then((m) => m.CategoryAnalyticsView),
-  { loading: LoadingView }
-);
-const PaymentAnalyticsView = dynamic(
-  () => import("@/components/analytics/PaymentAnalyticsView").then((m) => m.PaymentAnalyticsView),
-  { loading: LoadingView }
-);
 const BusinessInsightsView = dynamic(
   () => import("@/components/insights/BusinessInsightsView").then((m) => m.BusinessInsightsView),
   { loading: LoadingView }
@@ -143,30 +131,6 @@ export default function DashboardPage() {
           {/* VIEW: CUSTOMER ANALYTICS (PHASE 4) */}
           {currentView === "customer" && (
             <CustomerAnalyticsView
-              activeDataset={activeDataset}
-              onOpenUpload={() => setCurrentView("upload")}
-            />
-          )}
-
-          {/* VIEW: GEOGRAPHIC ANALYTICS (PHASE 4) */}
-          {currentView === "geographic" && (
-            <GeographicAnalyticsView
-              activeDataset={activeDataset}
-              onOpenUpload={() => setCurrentView("upload")}
-            />
-          )}
-
-          {/* VIEW: CATEGORY ANALYTICS (PHASE 4) */}
-          {currentView === "category" && (
-            <CategoryAnalyticsView
-              activeDataset={activeDataset}
-              onOpenUpload={() => setCurrentView("upload")}
-            />
-          )}
-
-          {/* VIEW: PAYMENT ANALYTICS (PHASE 4) */}
-          {currentView === "payment" && (
-            <PaymentAnalyticsView
               activeDataset={activeDataset}
               onOpenUpload={() => setCurrentView("upload")}
             />
@@ -315,30 +279,6 @@ export default function DashboardPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setCurrentView("geographic")}
-                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-cyan-600 hover:bg-cyan-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
-                    >
-                      <MapPin className="w-3.5 h-3.5" />
-                      <span>Geographic</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setCurrentView("category")}
-                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
-                    >
-                      <FolderTree className="w-3.5 h-3.5" />
-                      <span>Categories</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setCurrentView("payment")}
-                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-amber-600 hover:bg-amber-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
-                    >
-                      <CreditCard className="w-3.5 h-3.5" />
-                      <span>Payments</span>
-                    </button>
-                    <button
-                      type="button"
                       onClick={() => setCurrentView("insights")}
                       className="px-3 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-sm flex items-center gap-1.5 transition-colors"
                     >
@@ -474,6 +414,22 @@ export default function DashboardPage() {
               <FeaturePreviewGrid onSelectView={(v) => setCurrentView(v as NavView)} />
             </>
           )}
+
+          {/* Platform Footer with Creator Signature */}
+          <footer className="mt-12 pt-6 border-t border-slate-200/80 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>© 2026 Retail Insights Platform. All rights reserved.</p>
+            <p className="flex items-center gap-1.5">
+              <span>Designed & Developed by</span>
+              <a
+                href="https://github.com/nikhilkumarnayak364-lang"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-indigo-600 hover:text-indigo-700 underline"
+              >
+                Nikhil Kumar Nayak
+              </a>
+            </p>
+          </footer>
         </main>
       </div>
     </div>

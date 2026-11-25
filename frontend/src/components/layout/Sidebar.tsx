@@ -18,7 +18,7 @@ import {
   X,
 } from "lucide-react";
 
-export type NavView = "overview" | "upload" | "explorer" | "sales" | "product" | "customer" | "category" | "geographic" | "payment" | "insights" | "settings";
+export type NavView = "overview" | "upload" | "explorer" | "sales" | "product" | "customer" | "insights" | "settings";
 
 interface NavItem {
   id: NavView | string;
@@ -30,12 +30,9 @@ interface NavItem {
 
 const NAVIGATION_ITEMS: NavItem[] = [
   { id: "overview", name: "Overview", icon: LayoutDashboard, isAvailable: true },
-  { id: "sales", name: "Sales Analysis", icon: TrendingUp, isAvailable: true },
-  { id: "product", name: "Product Analysis", icon: Package, isAvailable: true },
-  { id: "customer", name: "Customer Analysis", icon: Users, isAvailable: true },
-  { id: "category", name: "Category Analysis", icon: FolderTree, isAvailable: true },
-  { id: "geographic", name: "Geographic Analysis", icon: MapPin, isAvailable: true },
-  { id: "payment", name: "Payment Analysis", icon: CreditCard, isAvailable: true },
+  { id: "sales", name: "Sales & Revenue", icon: TrendingUp, isAvailable: true },
+  { id: "product", name: "Products & Inventory", icon: Package, isAvailable: true },
+  { id: "customer", name: "Customers & Retention", icon: Users, isAvailable: true },
   { id: "insights", name: "Business Insights", icon: Sparkles, isAvailable: true },
   { id: "upload", name: "Upload Dataset", icon: UploadCloud, isAvailable: true },
   { id: "explorer", name: "Data Explorer", icon: Database, isAvailable: true },
@@ -125,14 +122,36 @@ export const Sidebar: React.FC<SidebarProps> = ({
         })}
       </div>
 
-      {/* Clean Workspace Footer */}
-      <div className="p-4 border-t border-slate-800/80 bg-slate-950">
-        <div className="rounded-lg bg-slate-900/60 border border-slate-800/80 p-3 text-xs flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            <span className="text-slate-300 font-medium">Enterprise Edition</span>
+      {/* Workspace Footer & Author Signature */}
+      <div className="p-4 border-t border-slate-800/80 bg-slate-950 space-y-2.5">
+        <div className="rounded-xl bg-slate-900/90 border border-slate-800/80 p-3">
+          <div className="flex items-center justify-between text-xs mb-1.5">
+            <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Creator & Developer</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           </div>
-          <span className="text-[10px] text-slate-500 font-mono">v1.0</span>
+          <a
+            href="https://github.com/nikhilkumarnayak364-lang"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5 group"
+          >
+            <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white shrink-0 group-hover:bg-indigo-500 transition-colors shadow-sm">
+              NN
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-white truncate group-hover:text-indigo-300 transition-colors">
+                Nikhil Kumar Nayak
+              </p>
+              <p className="text-[10px] text-slate-500 truncate">
+                @nikhilkumarnayak364-lang
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <div className="flex items-center justify-between text-[11px] text-slate-500 px-1">
+          <span>Enterprise Edition</span>
+          <span className="font-mono text-[10px]">v1.0</span>
         </div>
       </div>
     </aside>

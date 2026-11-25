@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Trash2,
+  User,
 } from "lucide-react";
 
 import { BackendConnectionState, DatasetMetadata } from "@/types/api";
@@ -55,6 +56,35 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <p className="text-xs text-slate-500 mt-0.5">
           Enterprise runtime configuration · Database connection status · Analytical engine specifications
         </p>
+      </div>
+
+      {/* Creator & Lead Architect Card */}
+      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl border border-indigo-900/50 p-5 text-white shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-base shadow-lg shadow-indigo-600/40 shrink-0">
+            NN
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-base font-bold text-white">Nikhil Kumar Nayak</h3>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-indigo-300 bg-indigo-500/20 px-2 py-0.5 rounded-full border border-indigo-400/30">
+                Lead Creator
+              </span>
+            </div>
+            <p className="text-xs text-slate-300 mt-0.5">
+              Creator, Full-Stack Developer & Analytics System Architect
+            </p>
+          </div>
+        </div>
+        <a
+          href="https://github.com/nikhilkumarnayak364-lang"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold backdrop-blur-sm transition-colors text-center shrink-0 inline-flex items-center justify-center gap-1.5"
+        >
+          <span>GitHub Profile</span>
+          <span>&rarr;</span>
+        </a>
       </div>
 
       {/* Architecture & Runtime Specs Card */}

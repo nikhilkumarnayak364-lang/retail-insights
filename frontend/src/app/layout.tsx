@@ -13,7 +13,8 @@ export const metadata: Metadata = {
     "Executive retail intelligence platform with automated revenue trends, RFM customer segmentation, catalog margin analytics, and prescriptive recommendations.",
   applicationName: "Retail Insights BI",
   keywords: ["Retail Analytics", "Business Intelligence", "Sales Velocity", "RFM Segmentation", "Margin Leakage", "Retail BI"],
-  authors: [{ name: "Retail Insights Engineering Team" }],
+  authors: [{ name: "Nikhil Kumar Nayak", url: "https://github.com/nikhilkumarnayak364-lang" }],
+  creator: "Nikhil Kumar Nayak",
   openGraph: {
     title: "Retail Insights | Enterprise Analytics Platform",
     description: "Enterprise Retail Analytics and Business Intelligence powered by Next.js and Python FastAPI.",
