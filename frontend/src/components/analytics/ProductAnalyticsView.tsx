@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import {
   Package,
   FolderTree,
@@ -47,7 +47,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
   activeDataset,
   onOpenUpload,
 }) => {
-  const { formatCurrency } = useCurrency();
+  const { formatCurrency, currency, symbol } = useCurrency();
   const [data, setData] = useState<ProductAnalyticsResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -124,6 +124,28 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
   }
 
   const { catalog_summary, top_by_revenue, top_by_units, top_by_profit, slow_movers, categories, price_tiers } = data;
+
+  // Format price tier labels dynamically according to active currency (USD, INR, EUR, GBP)
+  const displayPriceTiers = useMemo(() => {
+    if (!price_tiers || !Array.isArray(price_tiers)) return [];
+
+    return price_tiers.map((pt) => {
+      let label = pt.tier;
+      if (currency === "USD") {
+        label = pt.tier;
+      } else {
+        // Convert any dollar amounts ($25, $50, etc.) to the active currency value and symbol
+        label = pt.tier.replace(/\$(\d+(?:\.\d+)?)/g, (_, numStr) => {
+          const num = parseFloat(numStr);
+          return formatCurrency(num, { compact: true });
+        });
+      }
+      return {
+        ...pt,
+        displayTier: label,
+      };
+    });
+  }, [price_tiers, currency, formatCurrency]);
 
   const activeTopProducts =
     metricSort === "revenue"
@@ -411,19 +433,20 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
                 Price Point Sensitivity Tiers
               </h3>
               <p className="text-xs text-slate-500">
-                Revenue generated across unit price bands
+                Revenue generated across unit price bands ({symbol})
               </p>
             </div>
           </div>
 
           <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={price_tiers} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+              <BarChart data={displayPriceTiers} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="tier" tick={{ fontSize: 10, fill: "#64748b" }} tickLine={false} axisLine={{ stroke: "#e2e8f0" }} />
+                <XAxis dataKey="displayTier" tick={{ fontSize: 10, fill: "#64748b" }} tickLine={false} axisLine={{ stroke: "#e2e8f0" }} />
                 <YAxis tick={{ fontSize: 11, fill: "#64748b" }} tickLine={false} axisLine={false} tickFormatter={(v) => formatCurrency(v, { compact: true })} />
                 <Tooltip
                   formatter={(val: any) => [formatCurrency(Number(val)), "Revenue"]}
+                  labelFormatter={(label) => `Price Tier: ${label}`}
                   contentStyle={{ backgroundColor: "#0f172a", borderRadius: "12px", border: "none", color: "#fff", fontSize: "12px" }}
                 />
                 <Bar dataKey="revenue" fill="#10b981" radius={[6, 6, 0, 0]} />
