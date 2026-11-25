@@ -14,6 +14,9 @@ import {
   MapPin,
   FolderTree,
   CreditCard,
+  Zap,
+  Loader2,
+  Check,
 } from "lucide-react";
 
 import { Sidebar, NavView } from "@/components/layout/Sidebar";
@@ -78,6 +81,18 @@ export default function DashboardPage() {
   } = useDatasets();
 
   const activeStats = activeDataset?.summary_stats;
+  const [loadingSample, setLoadingSample] = useState<string | null>(null);
+
+  const handleQuickSample = async (type: "electronics" | "clothing" | "grocery") => {
+    setLoadingSample(type);
+    try {
+      await loadSample(type);
+    } catch (err) {
+      console.error("Failed to load sample dataset:", err);
+    } finally {
+      setLoadingSample(null);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col lg:flex-row">
@@ -320,6 +335,85 @@ export default function DashboardPage() {
                   </button>
                 </div>
               )}
+
+              {/* 1-Click Live Demo Dataset Switcher */}
+              <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                    <Zap className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                      1-Click Retail Domain Switcher
+                      <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+                        Live Sandbox
+                      </span>
+                    </h4>
+                    <p className="text-[11px] text-slate-500">
+                      Switch instantly across three enterprise retail sectors to preview analytics
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    type="button"
+                    onClick={() => handleQuickSample("electronics")}
+                    disabled={loadingSample !== null}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                      activeDataset?.retail_type === "electronics"
+                        ? "bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-600/30 font-bold"
+                        : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 hover:border-slate-300"
+                    }`}
+                  >
+                    {loadingSample === "electronics" ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-400" />
+                    ) : (
+                      <span>⚡</span>
+                    )}
+                    <span>Electronics</span>
+                    <span className="text-[10px] opacity-75 font-mono">(179 rows)</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleQuickSample("clothing")}
+                    disabled={loadingSample !== null}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                      activeDataset?.retail_type === "clothing"
+                        ? "bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-600/30 font-bold"
+                        : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 hover:border-slate-300"
+                    }`}
+                  >
+                    {loadingSample === "clothing" ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-400" />
+                    ) : (
+                      <span>👗</span>
+                    )}
+                    <span>Clothing Boutique</span>
+                    <span className="text-[10px] opacity-75 font-mono">(160 rows)</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleQuickSample("grocery")}
+                    disabled={loadingSample !== null}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                      activeDataset?.retail_type === "grocery"
+                        ? "bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-600/30 font-bold"
+                        : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 hover:border-slate-300"
+                    }`}
+                  >
+                    {loadingSample === "grocery" ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-400" />
+                    ) : (
+                      <span>🛒</span>
+                    )}
+                    <span>Grocery Supermarket</span>
+                    <span className="text-[10px] opacity-75 font-mono">(185 rows)</span>
+                  </button>
+                </div>
+              </div>
 
               {/* Core Metric Cards Section (Live from Python Pandas if dataset active) */}
               <div>

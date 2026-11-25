@@ -26,6 +26,7 @@ import {
 import { InsightsResponse, InsightItem, DatasetMetadata } from "@/types/api";
 import { apiService } from "@/services/api";
 import { useCurrency } from "@/context/CurrencyContext";
+import { WhatIfSimulatorCard } from "@/components/analytics/WhatIfSimulatorCard";
 
 interface BusinessInsightsViewProps {
   activeDataset: DatasetMetadata | null;
@@ -342,6 +343,12 @@ export const BusinessInsightsView: React.FC<BusinessInsightsViewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Strategic Scenario Modeling ("What-If" Engine) */}
+      <WhatIfSimulatorCard
+        baselineRevenue={activeDataset?.summary_stats?.financials?.total_revenue || 0}
+        baselineProfit={activeDataset?.summary_stats?.financials?.total_profit || 0}
+      />
 
       {/* Filters Toolbar */}
       <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-sm flex flex-col gap-3">

@@ -17,6 +17,7 @@ import {
   BarChart2,
   PieChart as PieIcon,
   ShieldAlert,
+  Download,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -35,6 +36,7 @@ import {
 import { ProductAnalyticsResponse, DatasetMetadata, ProductItem } from "@/types/api";
 import { apiService } from "@/services/api";
 import { useCurrency } from "@/context/CurrencyContext";
+import { downloadCsv } from "@/utils/csvExport";
 
 const CATEGORY_COLORS = ["#6366f1", "#10b981", "#f59e0b", "#ec4899", "#8b5cf6", "#06b6d4", "#3b82f6"];
 
@@ -186,6 +188,32 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
     const term = searchTerm.toLowerCase().trim();
     return pName.includes(term) || pCat.includes(term) || pId.includes(term);
   });
+
+  const handleExportProducts = () => {
+    const headers = [
+      "Product ID",
+      "Product Name",
+      "Department",
+      "Units Sold",
+      "Avg Selling Price",
+      "Gross Revenue",
+      "Gross Profit",
+      "Margin %",
+      "Revenue Share %",
+    ];
+    const rows = tableProducts.map((p) => [
+      p.product_id || "",
+      p.product_name || "",
+      p.category || "",
+      p.units_sold ?? 0,
+      p.avg_selling_price ?? 0,
+      p.revenue ?? 0,
+      p.profit ?? 0,
+      p.profit_margin_pct ?? 0,
+      p.revenue_share_pct ?? 0,
+    ]);
+    downloadCsv(`merchandise_catalog_${activeDataset?.retail_type || "export"}`, headers, rows);
+  };
 
   return (
     <div className="space-y-6">
@@ -529,15 +557,27 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
             </p>
           </div>
 
-          <div className="relative max-w-xs w-full">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search product or category..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+          <div className="flex items-center gap-2 self-start sm:self-auto w-full sm:w-auto">
+            <div className="relative max-w-xs w-full">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search product or category..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={handleExportProducts}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-colors shadow-2xs shrink-0 cursor-pointer"
+              title="Download merchandise records to CSV"
+            >
+              <Download className="w-3.5 h-3.5 text-slate-500" />
+              <span className="hidden sm:inline">Export CSV</span>
+            </button>
           </div>
         </div>
 

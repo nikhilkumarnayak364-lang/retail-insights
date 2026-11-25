@@ -13,6 +13,7 @@ import {
   UserCheck,
   TrendingUp,
   Calendar,
+  Download,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -31,6 +32,7 @@ import {
 import { CustomerAnalyticsResponse, DatasetMetadata } from "@/types/api";
 import { apiService } from "@/services/api";
 import { useCurrency } from "@/context/CurrencyContext";
+import { downloadCsv } from "@/utils/csvExport";
 
 // ─── Color Palettes ─────────────────────────────────────────────────────────
 const SEGMENT_PALETTE = [
@@ -212,6 +214,19 @@ export const CustomerAnalyticsView: React.FC<CustomerAnalyticsViewProps> = ({
 
   const { summary, rfm_segments, demographics, top_customers } = data;
 
+  const handleExportSegments = () => {
+    if (!rfm_segments || !Array.isArray(rfm_segments)) return;
+    const headers = ["RFM Segment", "Customer Count", "Revenue Share %", "Avg Spend", "Avg Frequency"];
+    const rows = rfm_segments.map((seg) => [
+      seg.segment,
+      seg.customer_count,
+      seg.revenue_share_pct,
+      seg.avg_spend,
+      seg.avg_frequency,
+    ]);
+    downloadCsv(`rfm_customer_segments_${activeDataset.retail_type || "export"}`, headers, rows);
+  };
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -299,9 +314,20 @@ export const CustomerAnalyticsView: React.FC<CustomerAnalyticsViewProps> = ({
 
         {/* RFM Detail Table */}
         <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="w-4 h-4 text-indigo-500" />
-            <h3 className="text-sm font-bold text-slate-900">Segment Revenue Breakdown</h3>
+          <div className="flex items-center justify-between gap-2 mb-4">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-indigo-500" />
+              <h3 className="text-sm font-bold text-slate-900">Segment Revenue Breakdown</h3>
+            </div>
+            <button
+              type="button"
+              onClick={handleExportSegments}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-colors shadow-2xs cursor-pointer"
+              title="Download RFM segment records to CSV"
+            >
+              <Download className="w-3.5 h-3.5 text-slate-500" />
+              <span>Export CSV</span>
+            </button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
