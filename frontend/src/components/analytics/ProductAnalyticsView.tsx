@@ -60,14 +60,13 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
     if (!rawTiers || !Array.isArray(rawTiers)) return [];
 
     return rawTiers.map((pt) => {
-      let label = pt.tier;
-      if (currency === "USD") {
-        label = pt.tier;
-      } else {
+      const rawTierStr = typeof pt?.tier === "string" ? pt.tier : String(pt?.tier || "");
+      let label = rawTierStr;
+      if (currency !== "USD") {
         // Convert any dollar amounts ($25, $50, etc.) to the active currency value and symbol
-        label = pt.tier.replace(/\$(\d+(?:\.\d+)?)/g, (_, numStr) => {
+        label = rawTierStr.replace(/\$(\d+(?:\.\d+)?)/g, (_, numStr) => {
           const num = parseFloat(numStr);
-          return formatCurrency(num, { compact: true });
+          return isNaN(num) ? numStr : formatCurrency(num, { compact: true });
         });
       }
       return {
@@ -77,15 +76,17 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
     });
   }, [data?.price_tiers, currency, formatCurrency]);
 
+  const activeDatasetId = activeDataset?.dataset_id;
+
   const fetchProductData = useCallback(async () => {
-    if (!activeDataset) {
+    if (!activeDatasetId) {
       setLoading(false);
       return;
     }
     setLoading(true);
     setError(null);
     try {
-      const resp = await apiService.getProductAnalytics(activeDataset.dataset_id, 12);
+      const resp = await apiService.getProductAnalytics(activeDatasetId, 12);
       setData(resp);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Failed to load product analytics";
@@ -93,7 +94,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
     } finally {
       setLoading(false);
     }
-  }, [activeDataset]);
+  }, [activeDatasetId]);
 
   useEffect(() => {
     fetchProductData();
@@ -137,31 +138,54 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
 
   if (error || !data) {
     return (
-      <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-xs text-rose-800 flex items-start gap-3">
-        <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-        <div>
-          <span className="font-bold">Error Computing Product Analytics:</span> {error || "Unknown error occurred"}
+      <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-xs text-rose-800 flex items-start justify-between gap-3">
+        <div className="flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+          <div>
+            <span className="font-bold">Error Computing Product Analytics:</span> {error || "Unknown error occurred"}
+            <p className="text-rose-600 mt-1">If the backend was waking up from sleep, clicking retry will refresh the data.</p>
+          </div>
         </div>
+        <button
+          type="button"
+          onClick={fetchProductData}
+          className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shrink-0 transition-colors"
+        >
+          Retry
+        </button>
       </div>
     );
   }
 
-  const { catalog_summary, top_by_revenue, top_by_units, top_by_profit, slow_movers, categories, price_tiers } = data;
+  const catalog = data.catalog_summary || {
+    total_skus: 0,
+    total_categories: 0,
+    avg_price_point: 0,
+    overall_margin_pct: 0,
+    top_category: "N/A",
+    total_volume: 0,
+  };
+  const topRevenue = Array.isArray(data.top_by_revenue) ? data.top_by_revenue : [];
+  const topUnits = Array.isArray(data.top_by_units) ? data.top_by_units : [];
+  const topProfit = Array.isArray(data.top_by_profit) ? data.top_by_profit : [];
+  const slowMoversList = Array.isArray(data.slow_movers) ? data.slow_movers : [];
+  const categoryList = Array.isArray(data.categories) ? data.categories : [];
 
   const activeTopProducts =
     metricSort === "revenue"
-      ? top_by_revenue
+      ? topRevenue
       : metricSort === "units"
-      ? top_by_units
-      : top_by_profit;
+      ? topUnits
+      : topProfit;
 
-  // Filtered table rows based on search
-  const tableProducts = (top_by_revenue || []).filter(
-    (p) =>
-      p.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (p.product_id && p.product_id.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  // Filtered table rows based on search with safe string checks
+  const tableProducts = topRevenue.filter((p) => {
+    const pName = String(p?.product_name || "").toLowerCase();
+    const pCat = String(p?.category || "").toLowerCase();
+    const pId = String(p?.product_id || "").toLowerCase();
+    const term = searchTerm.toLowerCase().trim();
+    return pName.includes(term) || pCat.includes(term) || pId.includes(term);
+  });
 
   return (
     <div className="space-y-6">
@@ -177,8 +201,8 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Analyzing {catalog_summary.total_skus} unique SKUs across {catalog_summary.total_categories} departments from{" "}
-            <span className="font-semibold text-slate-700">{data.dataset_name}</span>.
+            Analyzing {catalog.total_skus ?? 0} unique SKUs across {catalog.total_categories ?? 0} departments from{" "}
+            <span className="font-semibold text-slate-700">{data.dataset_name || "Active Dataset"}</span>.
           </p>
         </div>
 
@@ -229,11 +253,11 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
             </div>
           </div>
           <div className="mt-2 text-2xl font-bold font-mono text-slate-900">
-            {catalog_summary.total_skus} <span className="text-xs font-normal text-slate-500">distinct SKUs</span>
+            {catalog.total_skus ?? 0} <span className="text-xs font-normal text-slate-500">distinct SKUs</span>
           </div>
           <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 border-t border-slate-100 pt-2">
             <span>Total Units Sold:</span>
-            <span className="font-semibold text-slate-700">{catalog_summary.total_volume.toLocaleString()}</span>
+            <span className="font-semibold text-slate-700">{(catalog.total_volume ?? 0).toLocaleString()}</span>
           </div>
         </div>
 
@@ -248,12 +272,12 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
             </div>
           </div>
           <div className="mt-2 text-2xl font-bold font-mono text-slate-900">
-            {catalog_summary.total_categories} <span className="text-xs font-normal text-slate-500">categories</span>
+            {catalog.total_categories ?? 0} <span className="text-xs font-normal text-slate-500">categories</span>
           </div>
           <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 border-t border-slate-100 pt-2 truncate">
             <span>Top Department:</span>
-            <span className="font-semibold text-purple-700 truncate max-w-[140px]" title={catalog_summary.top_category}>
-              {catalog_summary.top_category}
+            <span className="font-semibold text-purple-700 truncate max-w-[140px]" title={catalog.top_category || "N/A"}>
+              {catalog.top_category || "N/A"}
             </span>
           </div>
         </div>
@@ -269,7 +293,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
             </div>
           </div>
           <div className="mt-2 text-2xl font-bold font-mono text-slate-900">
-            {formatCurrency(catalog_summary.avg_price_point)}
+            {formatCurrency(catalog.avg_price_point)}
           </div>
           <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 border-t border-slate-100 pt-2">
             <span>Catalog Pricing:</span>
@@ -288,7 +312,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
             </div>
           </div>
           <div className="mt-2 text-2xl font-bold font-mono text-emerald-700">
-            {catalog_summary.overall_margin_pct}%
+            {catalog.overall_margin_pct ?? 0}%
           </div>
           <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 border-t border-slate-100 pt-2">
             <span>Margin Health:</span>
@@ -342,11 +366,11 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
                     const item = payload[0].payload as ProductItem;
                     return (
                       <div className="bg-slate-900 text-white text-xs p-3 rounded-xl shadow-lg border border-slate-800 space-y-1">
-                        <p className="font-bold text-indigo-300">{item.product_name}</p>
-                        <p className="text-slate-400">Category: {item.category}</p>
+                        <p className="font-bold text-indigo-300">{item.product_name || "Unknown SKU"}</p>
+                        <p className="text-slate-400">Category: {item.category || "General"}</p>
                         <p className="text-emerald-300">Revenue: {formatCurrency(item.revenue)}</p>
-                        <p className="text-amber-300">Units Sold: {item.units_sold.toLocaleString()}</p>
-                        <p className="text-purple-300">Profit Margin: {item.profit_margin_pct}%</p>
+                        <p className="text-amber-300">Units Sold: {(item.units_sold ?? 0).toLocaleString()}</p>
+                        <p className="text-purple-300">Profit Margin: {item.profit_margin_pct ?? 0}%</p>
                       </div>
                     );
                   }
@@ -383,7 +407,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
-                    data={categories}
+                    data={categoryList}
                     dataKey="revenue"
                     nameKey="category"
                     cx="50%"
@@ -392,7 +416,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
                     outerRadius={75}
                     paddingAngle={3}
                   >
-                    {categories.map((entry, index) => (
+                    {categoryList.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[index % CATEGORY_COLORS.length]} />
                     ))}
                   </Pie>
@@ -405,8 +429,8 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
             </div>
 
             <div className="space-y-2">
-              {categories.map((c, idx) => (
-                <div key={c.category} className="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-50 border border-slate-100">
+              {categoryList.map((c, idx) => (
+                <div key={`${c.category}-${idx}`} className="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-50 border border-slate-100">
                   <div className="flex items-center gap-2">
                     <span
                       className="w-2.5 h-2.5 rounded-full shrink-0"
@@ -458,7 +482,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
       </div>
 
       {/* Dead Stock & Slow Movers Warning Card */}
-      {slow_movers && slow_movers.length > 0 && (
+      {slowMoversList && slowMoversList.length > 0 && (
         <div className="bg-amber-50/70 border border-amber-200/90 rounded-2xl p-5 shadow-sm">
           <div className="flex items-start gap-3">
             <div className="p-2.5 bg-amber-100 rounded-xl text-amber-700 shrink-0">
@@ -473,8 +497,8 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mt-3">
-                {slow_movers.slice(0, 4).map((item) => (
-                  <div key={item.product_name} className="p-3 rounded-xl bg-white border border-amber-200/80 text-xs shadow-2xs">
+                {slowMoversList.slice(0, 4).map((item, idx) => (
+                  <div key={`${item.product_name}-${idx}`} className="p-3 rounded-xl bg-white border border-amber-200/80 text-xs shadow-2xs">
                     <span className="text-[10px] uppercase font-semibold text-slate-400 block truncate">
                       {item.category}
                     </span>
@@ -482,7 +506,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
                       {item.product_name}
                     </h5>
                     <div className="mt-2 flex items-center justify-between text-[11px] text-slate-600">
-                      <span>Volume: <strong className="text-amber-800">{item.units_sold} units</strong></span>
+                      <span>Volume: <strong className="text-amber-800">{(item.units_sold ?? 0).toLocaleString()} units</strong></span>
                       <span className="font-mono font-bold">{formatCurrency(item.revenue)}</span>
                     </div>
                   </div>
@@ -532,8 +556,8 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-xs text-slate-700">
-              {tableProducts.map((p) => (
-                <tr key={p.product_name} className="hover:bg-slate-50/70 transition-colors">
+              {tableProducts.map((p, idx) => (
+                <tr key={`${p.product_id || p.product_name}-${idx}`} className="hover:bg-slate-50/70 transition-colors">
                   <td className="py-3 px-4 font-semibold text-slate-900 max-w-[200px] truncate" title={p.product_name}>
                     {p.product_name}
                   </td>
@@ -543,7 +567,7 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
                     </span>
                   </td>
                   <td className="py-3 px-4 text-right font-mono font-medium">
-                    {p.units_sold.toLocaleString()}
+                    {(p.units_sold ?? 0).toLocaleString()}
                   </td>
                   <td className="py-3 px-4 text-right font-mono text-slate-600">
                     {formatCurrency(p.avg_selling_price)}
@@ -555,12 +579,12 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
                     {formatCurrency(p.profit)}
                   </td>
                   <td className="py-3 px-4 text-right font-mono font-semibold">
-                    <span className={p.profit_margin_pct >= 50 ? "text-emerald-700" : "text-slate-700"}>
-                      {p.profit_margin_pct}%
+                    <span className={(p.profit_margin_pct ?? 0) >= 50 ? "text-emerald-700" : "text-slate-700"}>
+                      {p.profit_margin_pct ?? 0}%
                     </span>
                   </td>
                   <td className="py-3 px-4 text-right font-mono text-slate-500">
-                    {p.revenue_share_pct}%
+                    {p.revenue_share_pct ?? 0}%
                   </td>
                 </tr>
               ))}
@@ -571,4 +595,6 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
     </div>
   );
 };
+
+export default ProductAnalyticsView;
 

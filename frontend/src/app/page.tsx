@@ -39,27 +39,27 @@ const LoadingView = () => (
 // Dynamic imports for code-splitting heavy analytical views
 const DataExplorerView = dynamic(
   () => import("@/components/datasets/DataExplorerView").then((m) => m.DataExplorerView),
-  { loading: LoadingView }
+  { ssr: false, loading: LoadingView }
 );
 const SalesAnalyticsView = dynamic(
   () => import("@/components/analytics/SalesAnalyticsView").then((m) => m.SalesAnalyticsView),
-  { loading: LoadingView }
+  { ssr: false, loading: LoadingView }
 );
 const ProductAnalyticsView = dynamic(
-  () => import("@/components/analytics/ProductAnalyticsView").then((m) => m.ProductAnalyticsView),
-  { loading: LoadingView }
+  () => import("@/components/analytics/ProductAnalyticsView").then((m) => m.ProductAnalyticsView || m.default),
+  { ssr: false, loading: LoadingView }
 );
 const CustomerAnalyticsView = dynamic(
   () => import("@/components/analytics/CustomerAnalyticsView").then((m) => m.CustomerAnalyticsView),
-  { loading: LoadingView }
+  { ssr: false, loading: LoadingView }
 );
 const BusinessInsightsView = dynamic(
   () => import("@/components/insights/BusinessInsightsView").then((m) => m.BusinessInsightsView),
-  { loading: LoadingView }
+  { ssr: false, loading: LoadingView }
 );
 const SettingsView = dynamic(
   () => import("@/components/settings/SettingsView").then((m) => m.SettingsView),
-  { loading: LoadingView }
+  { ssr: false, loading: LoadingView }
 );
 
 export default function DashboardPage() {
