@@ -54,6 +54,29 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
   const [metricSort, setMetricSort] = useState<"revenue" | "units" | "profit">("revenue");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  // Format price tier labels dynamically according to active currency (USD, INR, EUR, GBP)
+  const displayPriceTiers = useMemo(() => {
+    const rawTiers = data?.price_tiers;
+    if (!rawTiers || !Array.isArray(rawTiers)) return [];
+
+    return rawTiers.map((pt) => {
+      let label = pt.tier;
+      if (currency === "USD") {
+        label = pt.tier;
+      } else {
+        // Convert any dollar amounts ($25, $50, etc.) to the active currency value and symbol
+        label = pt.tier.replace(/\$(\d+(?:\.\d+)?)/g, (_, numStr) => {
+          const num = parseFloat(numStr);
+          return formatCurrency(num, { compact: true });
+        });
+      }
+      return {
+        ...pt,
+        displayTier: label,
+      };
+    });
+  }, [data?.price_tiers, currency, formatCurrency]);
+
   const fetchProductData = useCallback(async () => {
     if (!activeDataset) {
       setLoading(false);
@@ -124,28 +147,6 @@ export const ProductAnalyticsView: React.FC<ProductAnalyticsViewProps> = ({
   }
 
   const { catalog_summary, top_by_revenue, top_by_units, top_by_profit, slow_movers, categories, price_tiers } = data;
-
-  // Format price tier labels dynamically according to active currency (USD, INR, EUR, GBP)
-  const displayPriceTiers = useMemo(() => {
-    if (!price_tiers || !Array.isArray(price_tiers)) return [];
-
-    return price_tiers.map((pt) => {
-      let label = pt.tier;
-      if (currency === "USD") {
-        label = pt.tier;
-      } else {
-        // Convert any dollar amounts ($25, $50, etc.) to the active currency value and symbol
-        label = pt.tier.replace(/\$(\d+(?:\.\d+)?)/g, (_, numStr) => {
-          const num = parseFloat(numStr);
-          return formatCurrency(num, { compact: true });
-        });
-      }
-      return {
-        ...pt,
-        displayTier: label,
-      };
-    });
-  }, [price_tiers, currency, formatCurrency]);
 
   const activeTopProducts =
     metricSort === "revenue"
