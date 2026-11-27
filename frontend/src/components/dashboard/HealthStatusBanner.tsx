@@ -26,14 +26,21 @@ export const HealthStatusBanner: React.FC<HealthStatusBannerProps> = ({
 
   if (status === "checking") {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
-        <div className="flex items-center gap-3 text-slate-700">
-          <Loader2 className="w-5 h-5 text-indigo-600 animate-spin shrink-0" />
-          <div>
-            <h3 className="text-sm font-semibold">Connecting to Analytics Services…</h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Verifying service availability. This usually takes a moment.
-            </p>
+      <div className="bg-gradient-to-r from-indigo-50 via-purple-50 to-indigo-50 rounded-2xl border border-indigo-200/90 p-5 shadow-sm">
+        <div className="flex items-center justify-between gap-3 text-slate-700">
+          <div className="flex items-center gap-3">
+            <Loader2 className="w-5 h-5 text-indigo-600 animate-spin shrink-0" />
+            <div>
+              <h3 className="text-sm font-bold text-indigo-950 flex items-center gap-2">
+                <span>Connecting to Analytics Cloud Services…</span>
+                <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">
+                  Booting
+                </span>
+              </h3>
+              <p className="text-xs text-indigo-900/80 mt-0.5">
+                Render free cloud services spin down after 15m of idle time. Initial wake-up takes ~30–45s — connecting automatically!
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -42,47 +49,31 @@ export const HealthStatusBanner: React.FC<HealthStatusBannerProps> = ({
 
   // Disconnected
   return (
-    <div className="bg-rose-50/60 rounded-xl border border-rose-200/80 p-6 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
+    <div className="bg-amber-50/80 rounded-2xl border border-amber-200/90 p-5 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-start gap-3">
-          <div className="p-2 bg-rose-100 rounded-lg text-rose-700 shrink-0 mt-0.5">
+          <div className="p-2 bg-amber-100 rounded-xl text-amber-700 shrink-0 mt-0.5">
             <AlertCircle className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-semibold text-rose-900">
-                Analytics Service Unavailable
+              <h3 className="text-sm font-bold text-amber-950">
+                Cloud Backend Sleeping or Waking Up
               </h3>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-200/60 text-rose-800 border border-rose-300">
-                Connection Failed
+              <span className="text-[10px] font-semibold font-mono px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 uppercase">
+                Standby Mode
               </span>
             </div>
-            <p className="text-xs text-rose-700 mt-1 max-w-2xl leading-relaxed">
-              The dashboard could not reach the analytics backend. Please ensure the
-              service is running and try again.
+            <p className="text-xs text-amber-800 mt-1 max-w-2xl leading-relaxed">
+              The free-tier analytical backend is hosted on Render and sleeps when inactive. Click <strong>Retry Connection</strong> to ping and awaken the server.
             </p>
-            {errorMessage && (
-              <div className="mt-2 text-xs font-mono bg-rose-100/80 text-rose-800 p-2 rounded border border-rose-200">
-                {errorMessage}
-              </div>
-            )}
-            <div className="mt-3 flex items-center gap-2 text-xs text-rose-800">
-              <Terminal className="w-3.5 h-3.5 shrink-0" />
-              <span>
-                {typeof window !== "undefined" &&
-                window.location.hostname !== "localhost" &&
-                window.location.hostname !== "127.0.0.1"
-                  ? "Cloud hosting (e.g. Render free tier) takes 30-50s to wake from cold sleep. Please wait a moment and click Retry Connection."
-                  : "Start the analytics service from your project directory, then click Retry."}
-              </span>
-            </div>
           </div>
         </div>
 
         <button
           type="button"
           onClick={onRetry}
-          className="px-4 py-2 rounded-lg text-xs font-medium bg-rose-600 hover:bg-rose-700 text-white shadow-sm transition-colors shrink-0"
+          className="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition-colors shrink-0 self-start sm:self-auto cursor-pointer"
         >
           Retry Connection
         </button>

@@ -229,8 +229,8 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Only show connection banner if system is disconnected */}
-              {connection.status === "disconnected" && (
+              {/* Show connection status banner if system is checking or disconnected */}
+              {connection.status !== "connected" && (
                 <HealthStatusBanner
                   state={connection}
                   onRetry={connection.recheck}
